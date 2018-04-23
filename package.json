@@ -1,0 +1,27 @@
+{
+  "name": "admin-portal",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "async-react-component": "^0.7.0",
+    "axios": "^0.18.0",
+    "material-ui": "^1.0.0-beta.37",
+    "material-ui-icons": "^1.0.0-beta.36",
+    "prop-types": "^15.6.1",
+    "react": "^16.3.1",
+    "react-copy-to-clipboard": "^5.0.1",
+    "react-dom": "latest",
+    "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2",
+    "react-scripts": "latest",
+    "react-swipeable-views": "^0.12.13",
+    "route-parser": "0.0.5",
+    "typeface-roboto": "0.0.54"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}
