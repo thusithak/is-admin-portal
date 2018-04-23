@@ -19,17 +19,10 @@ import React, {Component} from "react";
 import {Link} from "react-router-dom";
 import Grid from "material-ui/Grid";
 import Typography from "material-ui/Typography";
-import Card, {CardActions, CardContent} from "material-ui/Card";
+import Card, {CardContent} from "material-ui/Card";
 import Button from "material-ui/Button";
 import Devider from "material-ui/Divider";
 import {withStyles} from "material-ui/styles";
-import {FormControl, FormGroup} from "material-ui/Form";
-import TextField from "material-ui/TextField";
-import Input, {InputAdornment, InputLabel} from "material-ui/Input";
-import Visibility from "material-ui-icons/Visibility";
-import VisibilityOff from "material-ui-icons/VisibilityOff";
-import IconButton from "material-ui/IconButton";
-import classNames from "classnames";
 import green from "material-ui/colors/green";
 
 const styles = theme => ({
@@ -97,27 +90,12 @@ class SignIn extends Component {
         }
     }
 
-    handleUserNameChange  = event => {
-        this.setState({
-            username: event.target.value,
-        });
-    };
-
-    handlePasswordChange = event => {
-        this.setState({ password: event.target.value });
-    };
-
     handleMouseDownPassword = event => {
         event.preventDefault();
     };
 
     handleClickShowPassword = () => {
         this.setState({ showPassword: !this.state.showPassword });
-    };
-
-    handleSignInAuth = event => {
-        console.log("Username:", this.state.username);
-        console.log("Password:", this.state.password);
     };
     render(){
         const {classes} = this.props;
@@ -145,7 +123,7 @@ class SignIn extends Component {
                         <Grid item xs={12} sm={6} md={6} lg={4} xl={2}>
                             <Card className={classes.cardMargin}>
                                 <CardContent className={classes.cardContent}>
-
+                                    <Button color="primary" variant="raised" component={Link} to='/Onboarding'>Sign In</Button>
                                 </CardContent>
                             </Card>
                         </Grid>

@@ -83,7 +83,7 @@ class AppDrawer extends Component {
                 </div>
                 <Divider />
                 <List className='list-menu'>
-                    <ListItem button className='list-menu-home' component={Link} to="/onboarding">
+                    <ListItem button className='list-menu-home' component={Link} to="/Onboarding">
                         <ListItemIcon>
                             <HomeIcon />
                         </ListItemIcon>

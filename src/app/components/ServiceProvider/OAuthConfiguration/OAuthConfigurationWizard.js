@@ -47,7 +47,7 @@ const styles = theme => ({
         marginTop: theme.spacing.unit * 2,
     },
     verticalWizardButton:{
-        justifyContent: "baseline",
+        justifyContent: "start",
     },
     completed: {
         display: 'inline-block',

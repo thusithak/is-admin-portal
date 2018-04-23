@@ -52,7 +52,7 @@ class AdminPortal extends Component {
             <MuiThemeProvider theme={lightTheme}>
                 <Router basename="/">
                         <Switch>
-                            <Route path={"/"} component={getAsyncComponent(SignIn)}/>
+                            <Route path={"(/|/SignIn)"} component={getAsyncComponent(SignIn)}/>
                             <Layout>
                                 <Route path={"/Onboarding"} component={getAsyncComponent(Onboarding)}/>
                                 <Route path={"/ListServiceProvider"} component={getAsyncComponent(ListServiceProvider)}/>

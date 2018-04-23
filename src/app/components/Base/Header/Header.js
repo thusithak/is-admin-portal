@@ -225,7 +225,7 @@ class Header extends Component {
                     </div>
                     <Divider />
                     <List>
-                        <ListItem button component={Link} to="/onboarding">
+                        <ListItem button component={Link} to="/Onboarding">
                             <ListItemIcon>
                                 <HomeIcon />
                             </ListItemIcon>
