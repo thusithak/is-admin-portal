@@ -33,6 +33,9 @@ const styles = theme => ({
         marginRight: theme.spacing.unit,
         width: "100%",
     },
+    contentSpaceTop:{
+        marginTop: theme.spacing.unit * 3,
+    },
 });
 
 class BasicInformation extends Component {
@@ -69,14 +72,16 @@ class BasicInformation extends Component {
     }
 
     render(){
+        const {classes} = this.props;
+
         return (
-            <div>
-                <form className={this.props.classes.container} noValidate autoComplete="off">
+            <div className={classes.contentSpaceTop}>
+                <form className={classes.container} noValidate autoComplete="off">
                     <TextField
                         required
                         id="serviceProviderName"
                         label="Service Provider Name"
-                        className={this.props.classes.textField}
+                        className={classes.textField}
                         value={this.state.serviceProviderName}
                         onChange={this.handleChange('serviceProviderName')}
                         margin="normal"
@@ -86,7 +91,7 @@ class BasicInformation extends Component {
                         required
                         id="description"
                         label="Description"
-                        className={this.props.classes.textField}
+                        className={classes.textField}
                         value={this.state.description}
                         onChange={this.handleChange('description')}
                         margin="normal"
@@ -97,7 +102,7 @@ class BasicInformation extends Component {
                         required
                         id="applicationCertificate"
                         label="Application Certificate"
-                        className={this.props.classes.textField}
+                        className={classes.textField}
                         value={this.state.applicationCertificate}
                         onChange={this.handleChange('applicationCertificate')}
                         margin="normal"
@@ -113,7 +118,7 @@ class BasicInformation extends Component {
                             />
                         }
                         label="SaaS Application"
-                        className={this.props.classes.fullWidthSwitch}
+                        className={classes.fullWidthSwitch}
                     />
                 </form>
             </div>

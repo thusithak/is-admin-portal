@@ -34,7 +34,10 @@ const styles = theme => ({
     },
     fullWidthSwitch:{
         width:"100%",
-    }
+    },
+    contentSpaceTop:{
+        marginTop: theme.spacing.unit * 3,
+    },
 
 });
 
@@ -96,14 +99,15 @@ class LocalOutboundAuthenticationConfiguration extends Component {
     }
 
     render() {
+        const {classes} = this.props;
 
         return (
-            <div>
+            <div className={classes.contentSpaceTop}>
                 <RadioGroup
                     checked={this.state.authenticationType === 'default'}
                     aria-label="Authentication Type"
                     name="authenticationType"
-                    className={this.props.classes.group}
+                    className={classes.group}
                     value={this.state.authenticationType}
                     onChange={this.handleAuthenticationTypeChange}
                 >
@@ -113,7 +117,7 @@ class LocalOutboundAuthenticationConfiguration extends Component {
                 <RadioGroup
                     aria-label="Authentication Type"
                     name="authenticationType"
-                    className={this.props.classes.group}
+                    className={classes.group}
                     value={this.state.authenticationType}
                     onChange={this.handleshowLocalAuthenticationSelect}
                 >
@@ -126,7 +130,7 @@ class LocalOutboundAuthenticationConfiguration extends Component {
                 <RadioGroup
                     aria-label="Authentication Type"
                     name="authenticationType"
-                    className={this.props.classes.group}
+                    className={classes.group}
                     value={this.state.authenticationType}
                     onChange={this.handleAuthenticationTypeChange}
                 >
@@ -136,7 +140,7 @@ class LocalOutboundAuthenticationConfiguration extends Component {
                 <RadioGroup
                     aria-label="Authentication Type"
                     name="authenticationType"
-                    className={this.props.classes.group}
+                    className={classes.group}
                     value={this.state.authenticationType}
                     onChange={this.handleshowAdvanceConfigurationSelect}
                 >
@@ -147,7 +151,7 @@ class LocalOutboundAuthenticationConfiguration extends Component {
                     <AdvanceConfigurationSelect/>
                 </Collapse>
 
-                <FormGroup row className={this.props.classes.checkboxGroup}>
+                <FormGroup row className={classes.checkboxGroup}>
                     <FormControlLabel
                         control={
                             <Switch
@@ -158,7 +162,7 @@ class LocalOutboundAuthenticationConfiguration extends Component {
                             />
                         }
                         label="Assert identity using mapped local subject identifier"
-                        className={this.props.classes.fullWidthSwitch}
+                        className={classes.fullWidthSwitch}
                     />
                     <FormControlLabel
                         control={
@@ -170,7 +174,7 @@ class LocalOutboundAuthenticationConfiguration extends Component {
                             />
                         }
                         label="Always send back the authenticated list of identity providers"
-                        className={this.props.classes.fullWidthSwitch}
+                        className={classes.fullWidthSwitch}
                     />
                     <FormControlLabel
                         control={
@@ -182,7 +186,7 @@ class LocalOutboundAuthenticationConfiguration extends Component {
                             />
                         }
                         label="Use tenant domain in local subject identifier"
-                        className={this.props.classes.fullWidthSwitch}
+                        className={classes.fullWidthSwitch}
                     />
                     <FormControlLabel
                         control={
@@ -194,7 +198,7 @@ class LocalOutboundAuthenticationConfiguration extends Component {
                             />
                         }
                         label="Use user store domain in local subject identifier"
-                        className={this.props.classes.fullWidthSwitch}
+                        className={classes.fullWidthSwitch}
                     />
                     <FormControlLabel
                         control={
@@ -206,7 +210,7 @@ class LocalOutboundAuthenticationConfiguration extends Component {
                             />
                         }
                         label="Enable Authorization"
-                        className={this.props.classes.fullWidthSwitch}
+                        className={classes.fullWidthSwitch}
                     />
 
                 </FormGroup>

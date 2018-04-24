@@ -34,7 +34,9 @@ const styles = theme => ({
     group: {
         //flexDirection: "row",
     },
-
+    contentSpaceTop:{
+        marginTop: theme.spacing.unit * 3,
+    },
 });
 
 class ClaimConfiguration extends Component {
@@ -57,12 +59,14 @@ class ClaimConfiguration extends Component {
     }
 
     render() {
+        const {classes} = this.props;
+
         return (
-            <div>
+            <div className={classes.contentSpaceTop}>
                 <RadioGroup
                     aria-label="selectClaimMappingDialect"
                     name="selectClaimMappingDialect"
-                    className={this.props.classes.group}
+                    className={classes.group}
                     value={this.state.selectClaimMappingDialect}
                     onChange={this.handleClaimMappingDialectChange}
                 >

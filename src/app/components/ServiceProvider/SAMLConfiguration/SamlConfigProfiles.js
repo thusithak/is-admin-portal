@@ -101,6 +101,7 @@ const styles = theme => ({
     },
     expansionPanel: {
         margin: theme.spacing.unit,
+        marginTop: theme.spacing.unit * 3,
     }
 
 });
@@ -300,12 +301,14 @@ class SamlConfigProfiles extends Component {
     }
 
     render() {
+        const {classes} = this.props;
+
         return (
-            <div className={this.props.classes.expansionPanel}>
+            <div className={classes.expansionPanel}>
                 <ExpansionPanel defaultExpanded>
                     <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                        <div className={this.props.classes.column}>
-                            <Typography className={this.props.classes.heading}>Profiles</Typography>
+                        <div className={classes.column}>
+                            <Typography className={classes.heading}>Profiles</Typography>
                         </div>
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails>
@@ -364,15 +367,15 @@ class SamlConfigProfiles extends Component {
                                 <Button
                                     variant="raised"
                                     onClick={this.handleDownload}
-                                    className={this.props.classes.fullButton}
+                                    className={classes.fullButton}
                                 >
                                     Download ISP Metadata
                                 </Button>
-                                <div className={this.props.classes.staticTextField}>
+                                <div className={classes.staticTextField}>
                                     <Typography variant="body1">https://localhost:9443/samlsso</Typography>
                                     <FormHelperText>SSO URL</FormHelperText>
                                 </div>
-                                <div className={this.props.classes.staticTextField}>
+                                <div className={classes.staticTextField}>
                                     <Typography variant="body1">https://localhost:9443/samlsso</Typography>
                                     <FormHelperText>Logout URL</FormHelperText>
                                 </div>
@@ -382,8 +385,8 @@ class SamlConfigProfiles extends Component {
                 </ExpansionPanel>
                 <ExpansionPanel >
                     <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                        <div className={this.props.classes.column}>
-                            <Typography className={this.props.classes.heading}>Attribute Profiles</Typography>
+                        <div className={classes.column}>
+                            <Typography className={classes.heading}>Attribute Profiles</Typography>
                         </div>
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails>
@@ -439,8 +442,8 @@ class SamlConfigProfiles extends Component {
                 </ExpansionPanel>
                 <ExpansionPanel defaultExpanded>
                     <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                        <div className={this.props.classes.column}>
-                            <Typography className={this.props.classes.heading}>Manual Configs</Typography>
+                        <div className={classes.column}>
+                            <Typography className={classes.heading}>Manual Configs</Typography>
                         </div>
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails>
@@ -452,7 +455,7 @@ class SamlConfigProfiles extends Component {
                                             required
                                             id="issuer"
                                             label="Issuer"
-                                            className={this.props.classes.textField}
+                                            className={classes.textField}
                                             value={this.state.issuer}
                                             onChange={this.handleIssuerChange}
                                             margin="normal"
@@ -462,7 +465,7 @@ class SamlConfigProfiles extends Component {
                                             required
                                             id="assertionConsumerURLs"
                                             label="Assertion Consumer URLs"
-                                            className={this.props.classes.textField}
+                                            className={classes.textField}
                                             value={this.state.assertionConsumerURLs}
                                             onChange={this.handleAssertionConsumerURLsChange}
                                             margin="normal"
@@ -472,7 +475,7 @@ class SamlConfigProfiles extends Component {
                                             select
                                             id="defaultAssertionConsumerURL"
                                             label="Default Assertion Consumer URL"
-                                            className={this.props.classes.textField}
+                                            className={classes.textField}
                                             value={this.state.defaultAssertionConsumerURL}
                                             onChange={this.handleDefaultAssertionConsumerURLChange}
                                             margin="normal"
@@ -500,7 +503,7 @@ class SamlConfigProfiles extends Component {
                                                 />
                                             }
                                             label="Enable Single Logout"
-                                            className={this.props.classes.fullWidthSwitch}
+                                            className={classes.fullWidthSwitch}
                                         />
                                         <Collapse in={this.state.enableSingleLogout}>
                                             <TextField
@@ -528,8 +531,8 @@ class SamlConfigProfiles extends Component {
                 </ExpansionPanel>
                 <ExpansionPanel >
                     <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                        <div className={this.props.classes.column}>
-                            <Typography className={this.props.classes.heading}>Options</Typography>
+                        <div className={classes.column}>
+                            <Typography className={classes.heading}>Options</Typography>
                         </div>
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails>
@@ -558,7 +561,7 @@ class SamlConfigProfiles extends Component {
                                                 />
                                             }
                                             label="Enable Signature Validation in Authentication Requests and Logout Requests"
-                                            className={this.props.classes.fullWidthSwitch}
+                                            className={classes.fullWidthSwitch}
                                         />
                                         <FormControlLabel
                                             control={
@@ -583,7 +586,7 @@ class SamlConfigProfiles extends Component {
                                                 />
                                             }
                                             label="Enable Attribute Profile"
-                                            className={this.props.classes.fullWidthSwitch}
+                                            className={classes.fullWidthSwitch}
                                         />
                                         <Collapse in={this.state.enableAttributeProfile}>
                                             <FormControlLabel
@@ -610,7 +613,7 @@ class SamlConfigProfiles extends Component {
                                             />
                                         }
                                         label="Enable IdP Initiated SSO"
-                                        className={this.props.classes.fullWidthSwitch}
+                                        className={classes.fullWidthSwitch}
                                     />
                                     <FormGroup row>
                                         <FormControlLabel
@@ -623,19 +626,19 @@ class SamlConfigProfiles extends Component {
                                                 />
                                             }
                                             label="Enable IdP Initiated SLO"
-                                            className={this.props.classes.fullWidthSwitch}
+                                            className={classes.fullWidthSwitch}
                                         />
                                         <Collapse in={this.state.enableIdPInitiatedSLO}>
                                             <TextField
                                                 required
                                                 id="returntoURL"
                                                 label="Return to URL"
-                                                className={this.props.classes.textField}
+                                                className={classes.textField}
                                                 onChange={this.handleReturntoURLChange}
                                                 margin="normal"
                                                 helperText="Select this if you require validation from the recipient of the response"
                                             />
-                                            <Button variant="raised" className={this.props.classes.button}>
+                                            <Button variant="raised" className={classes.button}>
                                                 Add
                                             </Button>
                                         </Collapse>
@@ -650,7 +653,7 @@ class SamlConfigProfiles extends Component {
                                             />
                                         }
                                         label="Enable Assertion Query Request Profile"
-                                        className={this.props.classes.fullWidthSwitch}
+                                        className={classes.fullWidthSwitch}
                                     />
                                 </FormControl>
                             </Grid>
@@ -659,8 +662,8 @@ class SamlConfigProfiles extends Component {
                 </ExpansionPanel>
                 <ExpansionPanel >
                     <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                        <div className={this.props.classes.column}>
-                            <Typography className={this.props.classes.heading}>Audience and Recipiants</Typography>
+                        <div className={classes.column}>
+                            <Typography className={classes.heading}>Audience and Recipiants</Typography>
                         </div>
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails>
@@ -678,19 +681,19 @@ class SamlConfigProfiles extends Component {
                                                 />
                                             }
                                             label="Enable Audience Restriction"
-                                            className={this.props.classes.fullWidthSwitch}
+                                            className={classes.fullWidthSwitch}
                                         />
                                         <Collapse in={this.state.enableAudienceRestriction}>
                                             <TextField
                                                 required
                                                 id="audience"
                                                 label="Audience"
-                                                className={this.props.classes.textField}
+                                                className={classes.textField}
                                                 onChange={this.handleAudienceChange}
                                                 margin="normal"
                                                 helperText="Enable Audience Restriction to restrict the audience. You may add audience members using the Audience text box and clicking the Add button"
                                             />
-                                            <Button variant="raised" className={this.props.classes.button}>
+                                            <Button variant="raised" className={classes.button}>
                                                 Add
                                             </Button>
                                         </Collapse>
@@ -706,19 +709,19 @@ class SamlConfigProfiles extends Component {
                                                 />
                                             }
                                             label="Enable Recipient Validation"
-                                            className={this.props.classes.fullWidthSwitch}
+                                            className={classes.fullWidthSwitch}
                                         />
                                         <Collapse in={this.state.enableRecipientValidation}>
                                             <TextField
                                                 required
                                                 id="recipient"
                                                 label="Recipient"
-                                                className={this.props.classes.textField}
+                                                className={classes.textField}
                                                 onChange={this.handleRecipientChange}
                                                 margin="normal"
                                                 helperText="Select this if you require validation from the recipient of the response"
                                             />
-                                            <Button variant="raised" className={this.props.classes.button}>
+                                            <Button variant="raised" className={classes.button}>
                                                 Add
                                             </Button>
                                         </Collapse>
@@ -730,8 +733,8 @@ class SamlConfigProfiles extends Component {
                 </ExpansionPanel>
                 <ExpansionPanel >
                     <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                        <div className={this.props.classes.column}>
-                            <Typography className={this.props.classes.heading}>Advance Configurations</Typography>
+                        <div className={classes.column}>
+                            <Typography className={classes.heading}>Advance Configurations</Typography>
                         </div>
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails>
@@ -742,7 +745,7 @@ class SamlConfigProfiles extends Component {
                                         <TextField
                                             id="nameIDFormat"
                                             label="NameID format"
-                                            className={this.props.classes.textField}
+                                            className={classes.textField}
                                             value={this.state.nameIDFormat}
                                             onChange={this.handleNameIDFormatChange}
                                             margin="normal"
@@ -752,7 +755,7 @@ class SamlConfigProfiles extends Component {
                                             select
                                             id="certificateAlias"
                                             label="Certificate Alias"
-                                            className={this.props.classes.textField}
+                                            className={classes.textField}
                                             value={this.state.certificateAlias}
                                             onChange={this.handleCertificateAliasChange}
                                             margin="normal"
@@ -769,7 +772,7 @@ class SamlConfigProfiles extends Component {
                                             required
                                             id="responseSigningAlgorithm"
                                             label="Response Signing Algorithm"
-                                            className={this.props.classes.textField}
+                                            className={classes.textField}
                                             value={this.state.responseSigningAlgorithm}
                                             onChange={this.handleResponseSigningAlgorithmChange}
                                             margin="normal"
@@ -786,7 +789,7 @@ class SamlConfigProfiles extends Component {
                                             required
                                             id="responseDigestAlgorithm"
                                             label="Response Digest Algorithm"
-                                            className={this.props.classes.textField}
+                                            className={classes.textField}
                                             value={this.state.responseDigestAlgorithm}
                                             onChange={this.handleResponseDigestAlgorithmChange}
                                             margin="normal"
@@ -803,7 +806,7 @@ class SamlConfigProfiles extends Component {
                                             required
                                             id="assertionEncryptionAlgorithm"
                                             label="Assertion Encryption Algorithm"
-                                            className={this.props.classes.textField}
+                                            className={classes.textField}
                                             value={this.state.assertionEncryptionAlgorithm}
                                             onChange={this.handleAssertionEncryptionAlgorithmChange}
                                             margin="normal"
@@ -820,7 +823,7 @@ class SamlConfigProfiles extends Component {
                                             required
                                             id="keyEncryptionAlgorithm"
                                             label="Key Encryption Algorithm"
-                                            className={this.props.classes.textField}
+                                            className={classes.textField}
                                             value={this.state.keyEncryptionAlgorithm}
                                             onChange={this.handleKeyEncryptionAlgorithmChange}
                                             margin="normal"
