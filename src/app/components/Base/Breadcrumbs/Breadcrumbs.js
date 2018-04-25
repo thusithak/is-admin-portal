@@ -18,14 +18,13 @@
 
 import React, {Component} from 'react';
 import {withStyles} from 'material-ui/styles';
-import ButtonBase from 'material-ui/ButtonBase';
-import Typography from 'material-ui/Typography';
 import Crumbs from './Crumbs';
 import gray from 'material-ui/colors/grey';
 
 const styles = theme => ({
     root: {
         padding: theme.spacing.unit,
+        paddingLeft: theme.spacing.unit * 3,
         background: gray[200],
         borderBottom: `1px solid ${gray[300]}`,
     },

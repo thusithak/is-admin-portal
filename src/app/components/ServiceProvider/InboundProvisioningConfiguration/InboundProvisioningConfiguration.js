@@ -19,12 +19,12 @@
 import React, {Component} from "react";
 
 import {withStyles} from "material-ui/styles";
-import { MenuItem } from 'material-ui/Menu';
+import {MenuItem} from 'material-ui/Menu';
 import TextField from "material-ui/TextField";
 import Typography from "material-ui/Typography";
 import {FormControlLabel, FormHelperText} from 'material-ui/Form';
 import Switch from 'material-ui/Switch';
-
+import Grid from "material-ui/Grid";
 
 const styles = theme => ({
 
@@ -52,7 +52,6 @@ const styles = theme => ({
 const scimInboundUserstoreList = [
     {value: '1', label: 'PRIMARY',},
     {value: '2', label: 'SECONDARY-1',},
-
     {value: '3', label: 'SECONDARY-2',},
 ];
 
@@ -74,9 +73,7 @@ class InboundProvisioningConfiguration extends Component {
     };
 
     handleEnableDumbModeChange = event => {
-        this.setState({
-            enableDumbMode: !this.props.enableDumbMode,
-        });
+        this.setState({enableDumbMode: event.target.checked});
     };
 
     componentDidMount() {
@@ -89,45 +86,53 @@ class InboundProvisioningConfiguration extends Component {
             <div className={this.props.classes.container}>
                 <div className={this.props.classes.tableWrapper}>
                     <Typography variant="subheading" gutterBottom>SCIM Configuration</Typography>
-                    <Typography gutterBottom>
+                    <Typography gutterBottom color="textSecondary">
                         Service provider based SCIM provisioning is protected via OAuth 2.0.
-                        Your service provider must have a valid OAuth 2.0 client key and a client secret to invoke the SCIM API.
-                        To create OAuth 2.0 key/secret : Inbound Authentication Configuration -> OAuth/OpenID Connect Configuration.
+                        Your service provider must have a valid OAuth 2.0 client key and a client secret to invoke the
+                        SCIM API.
+                        To create OAuth 2.0 key/secret : Inbound Authentication Configuration -> OAuth/OpenID Connect
+                        Configuration.
                     </Typography>
-                    <TextField
-                        select
-                        required
-                        id="scimInboundUserstore"
-                        label="SCIM Inbound Userstore"
-                        className={this.props.classes.textField}
-                        value={this.state.scimInboundUserstore}
-                        onChange={this.handleScimInboundUserstoreChange}
-                        margin="normal"
-                        helperText="Select userstore domain name to provision users and groups."
-                    >
-                        {scimInboundUserstoreList.map(option => (
-                            <MenuItem key={option.value} value={option.value}>
-                                {option.label}
-                            </MenuItem>
-                        ))}
-                    </TextField>
-                    <FormControlLabel
-                        control={
-                            <Switch
-                                checked={this.state.enableDumbMode}
-                                onChange={this.handleEnableDumbModeChange}
-                                value="enableDumbMode"
-                                color="primary"
+                    <Grid container spacing={0} alignItems="flex-start" direction="row" justify="flex-start">
+                        <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+                            <TextField
+                                select
+                                required
+                                id="scimInboundUserstore"
+                                label="SCIM Inbound Userstore"
+                                className={this.props.classes.textField}
+                                value={this.state.scimInboundUserstore}
+                                onChange={this.handleScimInboundUserstoreChange}
+                                margin="normal"
+                                helperText="Select userstore domain name to provision users and groups."
+                            >
+                                {scimInboundUserstoreList.map(option => (
+                                    <MenuItem key={option.value} value={option.value}>
+                                        {option.label}
+                                    </MenuItem>
+                                ))}
+                            </TextField>
+                            <FormControlLabel
+                                control={
+                                    <Switch
+                                        checked={this.state.enableDumbMode}
+                                        onChange={this.handleEnableDumbModeChange}
+                                        value="enableDumbMode"
+                                        color="primary"
+                                    />
+                                }
+                                label="Enable Dumb Mode"
+                                className={this.props.classes.fullWidthSwitch}
                             />
-                        }
-                        label="Enable Dumb Mode"
-                        className={this.props.classes.fullWidthSwitch}
-                    />
-                    <FormHelperText>Users/Groups are not provisioned to the user store. They are only outbound provisioned.</FormHelperText>
+                            <FormHelperText>Users/Groups are not provisioned to the user store. They are only outbound
+                                provisioned.</FormHelperText>
+                        </Grid>
+                    </Grid>
                 </div>
             </div>
         )
     }
-};
+}
+;
 
 export default withStyles(styles)(InboundProvisioningConfiguration);

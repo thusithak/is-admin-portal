@@ -52,8 +52,8 @@ const styles = theme => ({
     iconDelete: {},
     formControl: {
         margin: theme.spacing.unit,
-        minWidth: 120,
-        maxWidth: 300,
+        minWidth: "50%",
+        maxWidth: 400,
     },
 
 });
