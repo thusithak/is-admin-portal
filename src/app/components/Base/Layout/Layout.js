@@ -20,6 +20,8 @@ import React, {Component} from "react";
 import {withStyles} from "material-ui/styles";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
+import Breadcrumbs from '../Breadcrumbs/Breadcrumbs'
+
 
 const drawerWidth = 260;
 
@@ -46,6 +48,7 @@ class Layout extends Component {
             <div className={classes.root}>
                 <Header/>
                 <main className={classes.container}>
+                    <Breadcrumbs />
                     {this.props.children}
                     <Footer/>
                 </main>

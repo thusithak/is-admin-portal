@@ -12,6 +12,7 @@
     "react-copy-to-clipboard": "^5.0.1",
     "react-dom": "latest",
     "react-router": "^4.2.0",
+    "react-router-breadcrumbs-hoc": "^2.1.0",
     "react-router-dom": "^4.2.2",
     "react-scripts": "latest",
     "react-swipeable-views": "^0.12.13",

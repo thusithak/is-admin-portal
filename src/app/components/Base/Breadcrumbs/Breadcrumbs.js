@@ -1,64 +1,39 @@
 import React from 'react';
-import { Link, withRouter } from 'react-router-dom';
-import Route from 'route-parser';
+import {NavLink} from 'react-router-dom';
+import withBreadcrumbs from 'react-router-breadcrumbs-hoc';
+import Typography from "material-ui/Typography";
 
-const isFunction = value => typeof value === 'function';
+// breadcrumbs can be any type of component or string
+//const UserBreadcrumb = ({match}) =>
+//    <span>{match.params.userId}</span>; // use match param userId to fetch/display user name
 
-const getPathTokens = pathname => {
-    const paths = ['/'];
+// define some custom breadcrumbs for certain routes (optional)
+const routes = [
+    {path: '/', breadcrumb: "Home"},
+    {path: '/Onboarding', breadcrumb: "Welcome"},
+    {path: '/ListServiceProvider', breadcrumb: 'Service Provider Listing'},
+    {path: '/CreateServiceProvider', breadcrumb: 'Create A Service Provider'},
+    {path: '/SamlConfigModeSelection', breadcrumb: 'SAML Configuration Mode Selection'},
+    {path: '/SAMLConfiguration', breadcrumb: 'SAML Configuration'},
+    {path: '/OAuthConfiguration', breadcrumb: 'OAuth Configuration'},
+];
 
-    if (pathname === '/') return paths;
 
-    pathname.split('/').reduce((prev, curr) => {
-        const currPath = `${prev}/${curr}`;
-        paths.push(currPath);
-        return currPath;
-    });
+// map & render your breadcrumb components however you want.
+// each `breadcrumb` has the props `key`, `location`, and `match` included!
+const Breadcrumbs = ({breadcrumbs}) => (
+    <div>
+        <Typography>
+            {breadcrumbs.map((breadcrumb, index) => (
+                <span key={breadcrumb.key}>
+            <NavLink to={breadcrumb.props.match.url}>
+              {breadcrumb}
+            </NavLink>
+                    {(index < breadcrumbs.length - 1) && <i> / </i>}
+          </span>
+            ))}
+        </Typography>
+    </div>
+);
 
-    return paths;
-};
-
-function getRouteMatch(routes, path) {
-    return Object.keys(routes)
-        .map(key => {
-            const params = new Route(key).match(path);
-            return {
-                didMatch: params !== false,
-                params,
-                key
-            };
-        })
-        .filter(item => item.didMatch)[0];
-}
-
-function getBreadcrumbs({ routes, match, location }) {
-    const pathTokens = getPathTokens(location.pathname);
-    return pathTokens.map((path, i) => {
-        const routeMatch = getRouteMatch(routes, path);
-        const routeValue = routes[routeMatch.key];
-        const name = isFunction(routeValue)
-            ? routeValue(routeMatch.params)
-            : routeValue;
-        return { name, path };
-    });
-}
-
-function Breadcrumbs({ routes, match, location }) {
-    const breadcrumbs = getBreadcrumbs({ routes, match, location });
-
-    return (
-        <div>
-            Breadcrumb:
-            {breadcrumbs.map((breadcrumb, i) =>
-                    <span key={breadcrumb.path}>
-          <Link to={breadcrumb.path}>
-            {breadcrumb.name}
-          </Link>
-                        {i < breadcrumbs.length - 1 ? ' / ' : ''}
-        </span>
-            )}
-        </div>
-    );
-}
-
-export default withRouter(Breadcrumbs);
+export default withBreadcrumbs(routes)(Breadcrumbs);
