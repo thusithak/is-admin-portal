@@ -22,6 +22,7 @@ import {withStyles} from "material-ui/styles";
 import Radio, {RadioGroup} from "material-ui/Radio";
 import {FormControlLabel} from "material-ui/Form";
 import Collapse from "material-ui/transitions/Collapse";
+import Grid from "material-ui/Grid";
 import LocalClaimDialect from "./LocalClaimDialect";
 import CustomClaimDialect from "./CustomClaimDialect";
 
@@ -34,7 +35,7 @@ const styles = theme => ({
     group: {
         //flexDirection: "row",
     },
-    contentSpaceTop:{
+    contentSpaceTop: {
         marginTop: theme.spacing.unit * 3,
     },
 });
@@ -75,12 +76,20 @@ class ClaimConfiguration extends Component {
                     <FormControlLabel value="customClaimDialect" control={<Radio color="primary"/>}
                                       label="Define Custom Claim Dialect"/>
                 </RadioGroup>
-                <Collapse in={this.state.showClaimMappingDialect}>
-                    <LocalClaimDialect/>
-                </Collapse>
-                <Collapse in={!this.state.showClaimMappingDialect}>
-                    <CustomClaimDialect/>
-                </Collapse>
+                <Grid container spacing={24} alignItems="flex-start" direction="row" justify="flex-start">
+                    <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+                        <Collapse in={this.state.showClaimMappingDialect}>
+                            <LocalClaimDialect/>
+                        </Collapse>
+                    </Grid>
+                </Grid>
+                <Grid container spacing={24} alignItems="flex-start" direction="row" justify="flex-start">
+                    <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+                        <Collapse in={!this.state.showClaimMappingDialect}>
+                            <CustomClaimDialect/>
+                        </Collapse>
+                    </Grid>
+                </Grid>
             </div>
         )
     }

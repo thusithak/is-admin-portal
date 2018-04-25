@@ -74,7 +74,7 @@ class LocalClaimDialect extends Component {
     render() {
         return (
             <div>
-                <Button variant="raised" color="primary" onClick={this.handleAddClaimURI}>
+                <Button variant="raised" onClick={this.handleAddClaimURI}>
                     Add Claim URI
                 </Button>
                 <TextField
