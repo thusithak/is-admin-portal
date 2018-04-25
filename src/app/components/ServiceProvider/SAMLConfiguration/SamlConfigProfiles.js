@@ -422,16 +422,6 @@ class SamlConfigProfiles extends Component {
                                                     color="primary"
                                                 />
                                             }
-                                            label="XJOY"
-                                        />
-                                        <FormControlLabel
-                                            control={
-                                                <Checkbox
-                                                    checked={this.state.antoine}
-                                                    value="antoine"
-                                                    color="primary"
-                                                />
-                                            }
                                             label="IDP Discovery"
                                         />
                                     </FormGroup>
@@ -448,9 +438,7 @@ class SamlConfigProfiles extends Component {
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails>
                         <Grid container spacing={24} alignItems="flex-start" direction="row" justify="center">
-                            <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-                                <FormControl component="fieldset">
-                                    <FormGroup row>
+                            <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
                                         <TextField
                                             required
                                             id="issuer"
@@ -487,10 +475,8 @@ class SamlConfigProfiles extends Component {
                                                 </MenuItem>
                                             ))}
                                         </TextField>
-                                    </FormGroup>
-                                </FormControl>
                             </Grid>
-                            <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+                            <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
                                 <FormControl component="fieldset">
                                     <FormGroup row>
                                         <FormControlLabel
@@ -505,6 +491,8 @@ class SamlConfigProfiles extends Component {
                                             label="Enable Single Logout"
                                             className={classes.fullWidthSwitch}
                                         />
+                                    </FormGroup>
+                                </FormControl>
                                         <Collapse in={this.state.enableSingleLogout}>
                                             <TextField
                                                 required
@@ -523,8 +511,7 @@ class SamlConfigProfiles extends Component {
                                                 helperText="Single logout request accepting endpoint"
                                             />
                                         </Collapse>
-                                    </FormGroup>
-                                </FormControl>
+
                             </Grid>
                         </Grid>
                     </ExpansionPanelDetails>

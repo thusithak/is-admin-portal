@@ -38,6 +38,12 @@ const styles = theme => ({
         marginTop: theme.mixins.toolbar.minHeight + theme.spacing.unit,
         marginLeft: drawerWidth,
     },
+    breadcrumbStyles:{
+        paddingBottom: 0,
+        paddingTop: theme.spacing.unit * 3,
+        paddingLeft:theme.spacing.unit * 3,
+        paddingRight:theme.spacing.unit * 3,
+    },
 });
 
 class Layout extends Component {
@@ -48,7 +54,9 @@ class Layout extends Component {
             <div className={classes.root}>
                 <Header/>
                 <main className={classes.container}>
-                    <Breadcrumbs />
+                    <div className={classes.breadcrumbStyles}>
+                        <Breadcrumbs />
+                    </div>
                     {this.props.children}
                     <Footer/>
                 </main>

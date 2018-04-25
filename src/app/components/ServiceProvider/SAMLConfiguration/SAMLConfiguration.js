@@ -99,7 +99,7 @@ class SAMLConfiguration extends Component {
                     <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
                         <div className={classes.flexContainer}>
                             <div className={classNames(classes.flexItem, classes.backButtonMargin)}>
-                                <IconButton aria-label="Search" component={Link} to='/CreateServiceProvider'>
+                                <IconButton aria-label="Search" component={Link} to='/SamlConfigModeSelection'>
                                     <ArrowBackIcon />
                                 </IconButton>
                             </div>

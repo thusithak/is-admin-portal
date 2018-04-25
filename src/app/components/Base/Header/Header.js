@@ -80,7 +80,7 @@ const styles = theme => ({
         alignItems: 'center',
         justifyContent: 'flex-end',
         padding: '0 8px',
-        ...theme.mixins.toolbar,
+        //...theme.mixins.toolbar,
     },
     drawerPaper: {
         position: 'fixed',

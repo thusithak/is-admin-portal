@@ -24,10 +24,10 @@ import Grid from 'material-ui/Grid';
 import Button from 'material-ui/Button';
 import Devider from 'material-ui/Divider';
 import {withStyles} from 'material-ui/styles';
-import feature1 from '../../../images/app/feature1.jpg';
-import feature2 from '../../../images/app/feature2.jpg';
-import feature3 from '../../../images/app/feature3.jpg';
-import feature4 from '../../../images/app/feature4.jpg';
+// import feature1 from '../../../images/app/feature1.jpg';
+// import feature2 from '../../../images/app/feature2.jpg';
+// import feature3 from '../../../images/app/feature3.jpg';
+// import feature4 from '../../../images/app/feature4.jpg';
 import PageLoadingAnimation from '../Base/Loading/loading';
 
 const styles = theme => ({

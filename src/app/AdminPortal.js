@@ -23,14 +23,23 @@ import {MuiThemeProvider} from 'material-ui/styles';
 import Layout from '../app/components/Base/Layout/Layout';
 import lightTheme from '../themes/light';
 
-const SignIn = () => import('./components/SignIn/SignIn');
-const Onboarding = () => import('./components/Onboarding/Onboarding');
-const ListServiceProvider = () => import('./components/ServiceProvider/ListServiceProvider/ListServiceProvider');
-const CreateServiceProvider = () => import('./components/ServiceProvider/CreateServiceProvider/CreateServiceProvider');
-const SAMLConfiguration = () => import('./components/ServiceProvider/SAMLConfiguration/SAMLConfiguration');
-const OAuthConfiguration = () => import('./components/ServiceProvider/OAuthConfiguration/OAuthConfiguration');
-const SamlConfigModeSelection = () => import('./components/ServiceProvider/SAMLConfiguration/SamlConfigModeSelection');
-const four_oh_four = () => import('./components/Error/404');
+// const SignIn = () => import('./components/SignIn/SignIn');
+// const Onboarding = () => import('./components/Onboarding/Onboarding');
+// const ListServiceProvider = () => import('./components/ServiceProvider/ListServiceProvider/ListServiceProvider');
+// const CreateServiceProvider = () => import('./components/ServiceProvider/CreateServiceProvider/CreateServiceProvider');
+// const SAMLConfiguration = () => import('./components/ServiceProvider/SAMLConfiguration/SAMLConfiguration');
+// const OAuthConfiguration = () => import('./components/ServiceProvider/OAuthConfiguration/OAuthConfiguration');
+// const SamlConfigModeSelection = () => import('./components/ServiceProvider/SAMLConfiguration/SamlConfigModeSelection');
+// const four_oh_four = () => import('./components/Error/404');
+
+import SignIn from'./components/SignIn/SignIn';
+import Onboarding from'./components/Onboarding/Onboarding';
+import ListServiceProvider from'./components/ServiceProvider/ListServiceProvider/ListServiceProvider';
+import CreateServiceProvider from'./components/ServiceProvider/CreateServiceProvider/CreateServiceProvider';
+import SAMLConfiguration from'./components/ServiceProvider/SAMLConfiguration/SAMLConfiguration';
+import OAuthConfiguration from'./components/ServiceProvider/OAuthConfiguration/OAuthConfiguration';
+import SamlConfigModeSelection from'./components/ServiceProvider/SAMLConfiguration/SamlConfigModeSelection';
+import four_oh_four from'./components/Error/404';
 
 class AdminPortal extends Component {
     constructor(props) {
