@@ -22,6 +22,7 @@ import {withStyles} from "material-ui/styles";
 import Switch from 'material-ui/Switch';
 import {FormControlLabel} from 'material-ui/Form';
 import TextField from "material-ui/TextField";
+import Grid from "material-ui/Grid";
 
 const styles = theme => ({
     container: {
@@ -77,49 +78,59 @@ class BasicInformation extends Component {
         return (
             <div className={classes.contentSpaceTop}>
                 <form className={classes.container} noValidate autoComplete="off">
-                    <TextField
-                        required
-                        id="serviceProviderName"
-                        label="Service Provider Name"
-                        className={classes.textField}
-                        value={this.state.serviceProviderName}
-                        onChange={this.handleChange('serviceProviderName')}
-                        margin="normal"
-                        helperText="A unique name for the service provider"
-                    />
-                    <TextField
-                        required
-                        id="description"
-                        label="Description"
-                        className={classes.textField}
-                        value={this.state.description}
-                        onChange={this.handleChange('description')}
-                        margin="normal"
-                        helperText="A meaningful description about the service provider"
-                        multiline
-                    />
-                    <TextField
-                        required
-                        id="applicationCertificate"
-                        label="Application Certificate"
-                        className={classes.textField}
-                        value={this.state.applicationCertificate}
-                        onChange={this.handleChange('applicationCertificate')}
-                        margin="normal"
-                        helperText="The certificate (in PEM format) of the application"
-                    />
-                    <FormControlLabel
-                        control={
-                            <Switch
-                                checked={this.state.saaSApplication}
-                                onChange={this.handleChange('saaSApplication')}
-                                value="saaSApplication"
-                                color="primary"
+                    <Grid container spacing={40} alignItems="flex-start" direction="row" justify="flex-start">
+                        <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+                            <TextField
+                                required
+                                id="serviceProviderName"
+                                label="Service Provider Name"
+                                className={classes.textField}
+                                value={this.state.serviceProviderName}
+                                onChange={this.handleChange('serviceProviderName')}
+                                margin="dense"
+                                helperText="A unique name for the service provider"
                             />
-                        }
-                        label="SaaS Application"
-                        className={classes.fullWidthSwitch}
-                    />
+                        </Grid>
+                        <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+                            <TextField
+                                required
+                                id="description"
+                                label="Description"
+                                className={classes.textField}
+                                value={this.state.description}
+                                onChange={this.handleChange('description')}
+                                margin="dense"
+                                helperText="A meaningful description about the service provider"
+                                multiline
+                            />
+                        </Grid>
+                        <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+                            <TextField
+                                required
+                                id="applicationCertificate"
+                                label="Application Certificate"
+                                className={classes.textField}
+                                value={this.state.applicationCertificate}
+                                onChange={this.handleChange('applicationCertificate')}
+                                margin="dense"
+                                helperText="The certificate (in PEM format) of the application"
+                            />
+                        </Grid>
+                        <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+                            <FormControlLabel
+                                control={
+                                    <Switch
+                                        checked={this.state.saaSApplication}
+                                        onChange={this.handleChange('saaSApplication')}
+                                        value="saaSApplication"
+                                        color="primary"
+                                    />
+                                }
+                                label="SaaS Application"
+                                className={classes.fullWidthSwitch}
+                            />
+                        </Grid>
+                    </Grid>
                 </form>
             </div>
         )

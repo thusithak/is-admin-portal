@@ -95,6 +95,9 @@ const styles = theme => ({
     fullButton: {
         width: "100%",
     },
+    fullWidth: {
+        width: "100%",
+    },
     staticTextField: {
         marginTop: theme.spacing.unit * 3,
         marginBottom: theme.spacing.unit * 3,
@@ -102,6 +105,11 @@ const styles = theme => ({
     expansionPanel: {
         margin: theme.spacing.unit,
         marginTop: theme.spacing.unit * 3,
+    },
+    indentInnderContent: {
+        marginLeft: theme.spacing.unit * 5,
+        padding: theme.spacing.unit,
+        paddingTop: 0,
     }
 
 });
@@ -168,6 +176,7 @@ class SamlConfigProfiles extends Component {
             sLOResponseURL: "",
             sLORequestURL: "",
             enableAttributeProfile: false,
+            includeAttributesInTheResponseAlways: false,
             enableAudienceRestriction: false,
             enableRecipientValidation: false,
             enableIdPInitiatedSSO: false,
@@ -180,13 +189,13 @@ class SamlConfigProfiles extends Component {
         }
     }
 
-    handleIssuerChange  = event => {
+    handleIssuerChange = event => {
         this.setState({
             issuer: event.target.value,
         });
     };
 
-    handleAssertionConsumerURLsChange =  event => {
+    handleAssertionConsumerURLsChange = event => {
         this.setState({
             assertionConsumerURLs: event.target.value,
         });
@@ -260,6 +269,10 @@ class SamlConfigProfiles extends Component {
         this.setState({enableAttributeProfile: event.target.checked});
     };
 
+    handleIncludeAttributesInTheResponseAlwaysChange = event => {
+        this.setState({includeAttributesInTheResponseAlways: event.target.checked});
+    };
+
     handleEnableAudienceRestrictionChange = event => {
         this.setState({enableAudienceRestriction: event.target.checked});
     };
@@ -285,7 +298,7 @@ class SamlConfigProfiles extends Component {
     };
 
     handleISPInitializedWebSSOChange = event => {
-        this.setState({sPInitializedWebSSO: event.target.checked});
+        this.setState({iSPInitializedWebSSO: event.target.checked});
     };
 
     handleECPChange = event => {
@@ -397,8 +410,8 @@ class SamlConfigProfiles extends Component {
                                         <FormControlLabel
                                             control={
                                                 <Checkbox
-                                                    checked={this.state.gilad}
-                                                    value="gilad"
+                                                    checked={this.state.basicAttributeProfile}
+                                                    value="basicAttributeProfile"
                                                     color="primary"
                                                 />
                                             }
@@ -407,8 +420,8 @@ class SamlConfigProfiles extends Component {
                                         <FormControlLabel
                                             control={
                                                 <Checkbox
-                                                    checked={this.state.jason}
-                                                    value="jason"
+                                                    checked={this.state.XACMLAttributeProfile}
+                                                    value="XACMLAttributeProfile"
                                                     color="primary"
                                                 />
                                             }
@@ -417,18 +430,8 @@ class SamlConfigProfiles extends Component {
                                         <FormControlLabel
                                             control={
                                                 <Checkbox
-                                                    checked={this.state.antoine}
-                                                    value="antoine"
-                                                    color="primary"
-                                                />
-                                            }
-                                            label="XJOY"
-                                        />
-                                        <FormControlLabel
-                                            control={
-                                                <Checkbox
-                                                    checked={this.state.antoine}
-                                                    value="antoine"
+                                                    checked={this.state.IDPDAttributeProfile}
+                                                    value="IDPDAttributeProfile"
                                                     color="primary"
                                                 />
                                             }
@@ -449,62 +452,67 @@ class SamlConfigProfiles extends Component {
                     <ExpansionPanelDetails>
                         <Grid container spacing={24} alignItems="flex-start" direction="row" justify="center">
                             <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-                                <FormControl component="fieldset">
-                                    <FormGroup row>
-                                        <TextField
-                                            required
-                                            id="issuer"
-                                            label="Issuer"
-                                            className={classes.textField}
-                                            value={this.state.issuer}
-                                            onChange={this.handleIssuerChange}
-                                            margin="normal"
-                                            helperText="Unique identifier of the service provider specified in the SAML Authentication Request"
-                                        />
-                                        <TextField
-                                            required
-                                            id="assertionConsumerURLs"
-                                            label="Assertion Consumer URLs"
-                                            className={classes.textField}
-                                            value={this.state.assertionConsumerURLs}
-                                            onChange={this.handleAssertionConsumerURLsChange}
-                                            margin="normal"
-                                            helperText="URL to which the browser should be redirected to after the authentication is successful"
-                                        />
-                                        <TextField
-                                            select
-                                            id="defaultAssertionConsumerURL"
-                                            label="Default Assertion Consumer URL"
-                                            className={classes.textField}
-                                            value={this.state.defaultAssertionConsumerURL}
-                                            onChange={this.handleDefaultAssertionConsumerURLChange}
-                                            margin="normal"
-                                            helperText="Default Assertion Consumer URL in case you are unable to retrieve it from the authentication request"
-                                        >
-                                            {defaultAssertionConsumerURLList.map(option => (
-                                                <MenuItem key={option.value} value={option.value}>
-                                                    {option.label}
-                                                </MenuItem>
-                                            ))}
-                                        </TextField>
-                                    </FormGroup>
-                                </FormControl>
+                                <TextField
+                                    required
+                                    id="issuer"
+                                    label="Issuer"
+                                    className={classes.textField}
+                                    value={this.state.issuer}
+                                    onChange={this.handleIssuerChange}
+                                    margin="normal"
+                                    helperText="Unique identifier of the service provider specified in the SAML Authentication Request"
+                                />
                             </Grid>
                             <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-                                <FormControl component="fieldset">
-                                    <FormGroup row>
-                                        <FormControlLabel
-                                            control={
-                                                <Switch
-                                                    checked={this.state.enableSingleLogout}
-                                                    onChange={this.handleEnableSingleLogoutChange}
-                                                    value="enableSingleLogout"
-                                                    color="primary"
-                                                />
-                                            }
-                                            label="Enable Single Logout"
-                                            className={classes.fullWidthSwitch}
-                                        />
+                                <TextField
+                                    required
+                                    id="assertionConsumerURLs"
+                                    label="Assertion Consumer URLs"
+                                    className={classes.textField}
+                                    value={this.state.assertionConsumerURLs}
+                                    onChange={this.handleAssertionConsumerURLsChange}
+                                    margin="normal"
+                                    helperText="URL to which the browser should be redirected to after the authentication is successful"
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+                                <TextField
+                                    select
+                                    id="defaultAssertionConsumerURL"
+                                    label="Default Assertion Consumer URL"
+                                    className={classes.textField}
+                                    value={this.state.defaultAssertionConsumerURL}
+                                    onChange={this.handleDefaultAssertionConsumerURLChange}
+                                    margin="normal"
+                                    helperText="Default Assertion Consumer URL in case you are unable to retrieve it from the authentication request"
+                                >
+                                    {defaultAssertionConsumerURLList.map(option => (
+                                        <MenuItem key={option.value} value={option.value}>
+                                            {option.label}
+                                        </MenuItem>
+                                    ))}
+                                </TextField>
+                            </Grid>
+                            <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+                                <Grid container spacing={24} alignItems="flex-start" direction="row"
+                                      justify="center">
+                                    <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+                                        <FormGroup row>
+                                            <FormControlLabel
+                                                control={
+                                                    <Switch
+                                                        checked={this.state.enableSingleLogout}
+                                                        onChange={this.handleEnableSingleLogoutChange}
+                                                        value="enableSingleLogout"
+                                                        color="primary"
+                                                    />
+                                                }
+                                                label="Enable Single Logout"
+                                                className={classes.fullWidthSwitch}
+                                            />
+                                        </FormGroup>
+                                    </Grid>
+                                    <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
                                         <Collapse in={this.state.enableSingleLogout}>
                                             <TextField
                                                 required
@@ -513,7 +521,13 @@ class SamlConfigProfiles extends Component {
                                                 onChange={this.handleSLOResponseURLChange}
                                                 margin="normal"
                                                 helperText="Single logout response accepting endpoint"
+                                                className={classes.fullWidth}
                                             />
+                                        </Collapse>
+                                    </Grid>
+                                    <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+                                        <Collapse in={this.state.enableSingleLogout}>
+
                                             <TextField
                                                 required
                                                 id="sLORequestURL"
@@ -521,10 +535,11 @@ class SamlConfigProfiles extends Component {
                                                 onChange={this.handleSLORequestURLChange}
                                                 margin="normal"
                                                 helperText="Single logout request accepting endpoint"
+                                                className={classes.fullWidth}
                                             />
                                         </Collapse>
-                                    </FormGroup>
-                                </FormControl>
+                                    </Grid>
+                                </Grid>
                             </Grid>
                         </Grid>
                     </ExpansionPanelDetails>
@@ -589,17 +604,19 @@ class SamlConfigProfiles extends Component {
                                             className={classes.fullWidthSwitch}
                                         />
                                         <Collapse in={this.state.enableAttributeProfile}>
-                                            <FormControlLabel
-                                                control={
-                                                    <Switch
-                                                        checked={this.state.enableAttributeProfile}
-                                                        onChange={this.handleEnableAttributeProfileChange}
-                                                        value="enableAttributeProfile"
-                                                        color="primary"
-                                                    />
-                                                }
-                                                label="Include Attributes in the Response Always"
-                                            />
+                                            <div className={classes.indentInnderContent}>
+                                                <FormControlLabel
+                                                    control={
+                                                        <Switch
+                                                            checked={this.state.includeAttributesInTheResponseAlways}
+                                                            onChange={this.handleIncludeAttributesInTheResponseAlwaysChange}
+                                                            value="includeAttributesInTheResponseAlways"
+                                                            color="primary"
+                                                        />
+                                                    }
+                                                    label="Include Attributes in the Response Always"
+                                                />
+                                            </div>
                                         </Collapse>
                                     </FormGroup>
 
@@ -629,18 +646,24 @@ class SamlConfigProfiles extends Component {
                                             className={classes.fullWidthSwitch}
                                         />
                                         <Collapse in={this.state.enableIdPInitiatedSLO}>
-                                            <TextField
-                                                required
-                                                id="returntoURL"
-                                                label="Return to URL"
-                                                className={classes.textField}
-                                                onChange={this.handleReturntoURLChange}
-                                                margin="normal"
-                                                helperText="Select this if you require validation from the recipient of the response"
-                                            />
-                                            <Button variant="raised" className={classes.button}>
-                                                Add
-                                            </Button>
+                                            <div className={classes.indentInnderContent}>
+                                                <FormControl component="fieldset">
+                                                    <FormGroup row>
+                                                        <TextField
+                                                            required
+                                                            id="returntoURL"
+                                                            label="Return to URL"
+                                                            className={classes.textField}
+                                                            onChange={this.handleReturntoURLChange}
+                                                            margin="normal"
+                                                            helperText="Select this if you require validation from the recipient of the response"
+                                                        />
+                                                        <Button variant="raised" className={classes.button}>
+                                                            Add
+                                                        </Button>
+                                                    </FormGroup>
+                                                </FormControl>
+                                            </div>
                                         </Collapse>
                                     </FormGroup>
                                     <FormControlLabel
@@ -663,7 +686,7 @@ class SamlConfigProfiles extends Component {
                 <ExpansionPanel >
                     <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                         <div className={classes.column}>
-                            <Typography className={classes.heading}>Audience and Recipiants</Typography>
+                            <Typography className={classes.heading}>Audience and Recipients</Typography>
                         </div>
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails>
@@ -683,19 +706,22 @@ class SamlConfigProfiles extends Component {
                                             label="Enable Audience Restriction"
                                             className={classes.fullWidthSwitch}
                                         />
+
                                         <Collapse in={this.state.enableAudienceRestriction}>
-                                            <TextField
-                                                required
-                                                id="audience"
-                                                label="Audience"
-                                                className={classes.textField}
-                                                onChange={this.handleAudienceChange}
-                                                margin="normal"
-                                                helperText="Enable Audience Restriction to restrict the audience. You may add audience members using the Audience text box and clicking the Add button"
-                                            />
-                                            <Button variant="raised" className={classes.button}>
-                                                Add
-                                            </Button>
+                                            <div className={classes.indentInnderContent}>
+                                                <TextField
+                                                    required
+                                                    id="audience"
+                                                    label="Audience"
+                                                    className={classes.textField}
+                                                    onChange={this.handleAudienceChange}
+                                                    margin="normal"
+                                                    helperText="Enable Audience Restriction to restrict the audience. You may add audience members using the Audience text box and clicking the Add button"
+                                                />
+                                                <Button variant="raised" className={classes.button}>
+                                                    Add
+                                                </Button>
+                                            </div>
                                         </Collapse>
                                     </FormGroup>
                                     <FormGroup row>
@@ -712,18 +738,20 @@ class SamlConfigProfiles extends Component {
                                             className={classes.fullWidthSwitch}
                                         />
                                         <Collapse in={this.state.enableRecipientValidation}>
-                                            <TextField
-                                                required
-                                                id="recipient"
-                                                label="Recipient"
-                                                className={classes.textField}
-                                                onChange={this.handleRecipientChange}
-                                                margin="normal"
-                                                helperText="Select this if you require validation from the recipient of the response"
-                                            />
-                                            <Button variant="raised" className={classes.button}>
-                                                Add
-                                            </Button>
+                                            <div className={classes.indentInnderContent}>
+                                                <TextField
+                                                    required
+                                                    id="recipient"
+                                                    label="Recipient"
+                                                    className={classes.textField}
+                                                    onChange={this.handleRecipientChange}
+                                                    margin="normal"
+                                                    helperText="Select this if you require validation from the recipient of the response"
+                                                />
+                                                <Button variant="raised" className={classes.button}>
+                                                    Add
+                                                </Button>
+                                            </div>
                                         </Collapse>
                                     </FormGroup>
                                 </FormControl>
@@ -742,99 +770,114 @@ class SamlConfigProfiles extends Component {
                             <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
                                 <FormControl component="fieldset">
                                     <FormGroup row>
-                                        <TextField
-                                            id="nameIDFormat"
-                                            label="NameID format"
-                                            className={classes.textField}
-                                            value={this.state.nameIDFormat}
-                                            onChange={this.handleNameIDFormatChange}
-                                            margin="normal"
-                                            helperText="Defines the name identifier formats supported by the identity provider"
-                                        />
-                                        <TextField
-                                            select
-                                            id="certificateAlias"
-                                            label="Certificate Alias"
-                                            className={classes.textField}
-                                            value={this.state.certificateAlias}
-                                            onChange={this.handleCertificateAliasChange}
-                                            margin="normal"
-                                            helperText="Used to validate the signature of SAML2 requests and is used to generate encryption"
-                                        >
-                                            {certificateAliasList.map(option => (
-                                                <MenuItem key={option.value} value={option.value}>
-                                                    {option.label}
-                                                </MenuItem>
-                                            ))}
-                                        </TextField>
-                                        <TextField
-                                            select
-                                            required
-                                            id="responseSigningAlgorithm"
-                                            label="Response Signing Algorithm"
-                                            className={classes.textField}
-                                            value={this.state.responseSigningAlgorithm}
-                                            onChange={this.handleResponseSigningAlgorithmChange}
-                                            margin="normal"
-                                            helperText="Specifies the SignatureMethod algorithm to be used in the Signature element in POST binding"
-                                        >
-                                            {responseSigningAlgorithmList.map(option => (
-                                                <MenuItem key={option.value} value={option.value}>
-                                                    {option.label}
-                                                </MenuItem>
-                                            ))}
-                                        </TextField>
-                                        <TextField
-                                            select
-                                            required
-                                            id="responseDigestAlgorithm"
-                                            label="Response Digest Algorithm"
-                                            className={classes.textField}
-                                            value={this.state.responseDigestAlgorithm}
-                                            onChange={this.handleResponseDigestAlgorithmChange}
-                                            margin="normal"
-                                            helperText="Specifies the DigestMethod algorithm to be used in the Signature element in POST binding"
-                                        >
-                                            {responseDigestAlgorithmList.map(option => (
-                                                <MenuItem key={option.value} value={option.value}>
-                                                    {option.label}
-                                                </MenuItem>
-                                            ))}
-                                        </TextField>
-                                        <TextField
-                                            select
-                                            required
-                                            id="assertionEncryptionAlgorithm"
-                                            label="Assertion Encryption Algorithm"
-                                            className={classes.textField}
-                                            value={this.state.assertionEncryptionAlgorithm}
-                                            onChange={this.handleAssertionEncryptionAlgorithmChange}
-                                            margin="normal"
-                                            helperText="TODO"
-                                        >
-                                            {assertionEncryptionAlgorithmList.map(option => (
-                                                <MenuItem key={option.value} value={option.value}>
-                                                    {option.label}
-                                                </MenuItem>
-                                            ))}
-                                        </TextField>
-                                        <TextField
-                                            select
-                                            required
-                                            id="keyEncryptionAlgorithm"
-                                            label="Key Encryption Algorithm"
-                                            className={classes.textField}
-                                            value={this.state.keyEncryptionAlgorithm}
-                                            onChange={this.handleKeyEncryptionAlgorithmChange}
-                                            margin="normal"
-                                            helperText="TODO"
-                                        >
-                                            {keyEncryptionAlgorithmList.map(option => (
-                                                <MenuItem key={option.value} value={option.value}>
-                                                    {option.label}
-                                                </MenuItem>
-                                            ))}
-                                        </TextField>
+                                        <Grid container spacing={24} alignItems="flex-start" direction="row"
+                                              justify="center">
+                                            <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+                                                <TextField
+                                                    id="nameIDFormat"
+                                                    label="NameID format"
+                                                    className={classes.textField}
+                                                    value={this.state.nameIDFormat}
+                                                    onChange={this.handleNameIDFormatChange}
+                                                    margin="normal"
+                                                    helperText="Defines the name identifier formats supported by the identity provider"
+                                                />
+                                            </Grid>
+                                            <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+                                                <TextField
+                                                    select
+                                                    id="certificateAlias"
+                                                    label="Certificate Alias"
+                                                    className={classes.textField}
+                                                    value={this.state.certificateAlias}
+                                                    onChange={this.handleCertificateAliasChange}
+                                                    margin="normal"
+                                                    helperText="Used to validate the signature of SAML2 requests and is used to generate encryption"
+                                                >
+                                                    {certificateAliasList.map(option => (
+                                                        <MenuItem key={option.value} value={option.value}>
+                                                            {option.label}
+                                                        </MenuItem>
+                                                    ))}
+                                                </TextField>
+                                            </Grid>
+                                            <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+                                                <TextField
+                                                    select
+                                                    required
+                                                    id="responseSigningAlgorithm"
+                                                    label="Response Signing Algorithm"
+                                                    className={classes.textField}
+                                                    value={this.state.responseSigningAlgorithm}
+                                                    onChange={this.handleResponseSigningAlgorithmChange}
+                                                    margin="normal"
+                                                    helperText="Specifies the SignatureMethod algorithm to be used in the Signature element in POST binding"
+                                                >
+                                                    {responseSigningAlgorithmList.map(option => (
+                                                        <MenuItem key={option.value} value={option.value}>
+                                                            {option.label}
+                                                        </MenuItem>
+                                                    ))}
+                                                </TextField>
+                                            </Grid>
+                                            <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+                                                <TextField
+                                                    select
+                                                    required
+                                                    id="responseDigestAlgorithm"
+                                                    label="Response Digest Algorithm"
+                                                    className={classes.textField}
+                                                    value={this.state.responseDigestAlgorithm}
+                                                    onChange={this.handleResponseDigestAlgorithmChange}
+                                                    margin="normal"
+                                                    helperText="Specifies the DigestMethod algorithm to be used in the Signature element in POST binding"
+                                                >
+                                                    {responseDigestAlgorithmList.map(option => (
+                                                        <MenuItem key={option.value} value={option.value}>
+                                                            {option.label}
+                                                        </MenuItem>
+                                                    ))}
+                                                </TextField>
+                                            </Grid>
+                                            <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+                                                <TextField
+                                                    select
+                                                    required
+                                                    id="assertionEncryptionAlgorithm"
+                                                    label="Assertion Encryption Algorithm"
+                                                    className={classes.textField}
+                                                    value={this.state.assertionEncryptionAlgorithm}
+                                                    onChange={this.handleAssertionEncryptionAlgorithmChange}
+                                                    margin="normal"
+                                                    helperText="TODO"
+                                                >
+                                                    {assertionEncryptionAlgorithmList.map(option => (
+                                                        <MenuItem key={option.value} value={option.value}>
+                                                            {option.label}
+                                                        </MenuItem>
+                                                    ))}
+                                                </TextField>
+                                            </Grid>
+                                            <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+                                                <TextField
+                                                    select
+                                                    required
+                                                    id="keyEncryptionAlgorithm"
+                                                    label="Key Encryption Algorithm"
+                                                    className={classes.textField}
+                                                    value={this.state.keyEncryptionAlgorithm}
+                                                    onChange={this.handleKeyEncryptionAlgorithmChange}
+                                                    margin="normal"
+                                                    helperText="TODO"
+                                                >
+                                                    {keyEncryptionAlgorithmList.map(option => (
+                                                        <MenuItem key={option.value} value={option.value}>
+                                                            {option.label}
+                                                        </MenuItem>
+                                                    ))}
+                                                </TextField>
+                                            </Grid>
+                                        </Grid>
                                     </FormGroup>
                                 </FormControl>
                             </Grid>

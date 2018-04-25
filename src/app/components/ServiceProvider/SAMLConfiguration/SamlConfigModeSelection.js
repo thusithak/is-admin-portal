@@ -69,7 +69,10 @@ const styles = theme => ({
     },
     backButtonMargin:{
         marginRight: theme.spacing.unit,
-    }
+    },
+    manualConfigSpacing:{
+        marginTop: theme.spacing.unit * 2,
+    },
 });
 
 class SamlConfigModeSelection extends Component {
@@ -162,7 +165,7 @@ class SamlConfigModeSelection extends Component {
                                 <SamlConfigTabsMetadataUrl/>
                             </ExpansionPanelDetails>
                         </ExpansionPanel>
-                        <Paper>
+                        <Paper className={classes.manualConfigSpacing}>
                             <List component="nav" className={classes.configNav}>
                                 <ListItem button component={Link} to='/SAMLConfiguration'>
                                     <ListItemText primary="Manual Configuration"
