@@ -20,6 +20,9 @@ import React, {Component} from "react";
 
 import {withStyles} from "material-ui/styles";
 import Button from "material-ui/Button";
+import IconButton from "material-ui/IconButton";
+import DeleteIcon from "material-ui-icons/Delete";
+import Tooltip from "material-ui/Tooltip";
 import Table, {TableBody, TableCell, TableRow, TableHead} from "material-ui/Table";
 
 
@@ -46,9 +49,13 @@ const styles = theme => ({
 });
 
 let id = 0;
-function createData(name, action) {
+function createData(permission, action) {
     id += 1;
-    return { id, name, action};
+    return { id, permission, action};
+}
+function createDataRole(role, spRole, action) {
+    id += 1;
+    return { id, role, spRole, action};
 }
 
 class RolePermissionConfiguration extends Component {
@@ -63,9 +70,9 @@ class RolePermissionConfiguration extends Component {
                 createData('Permission 2', "Delete" ),
             ],
             dataRole : [
-                createData('Role 1', "Delete" ),
-                createData('Role 2', "Delete" ),
-                createData('Role 3', "Delete" ),
+                createDataRole('Role 1',"SP Role 1", "Delete" ),
+                createDataRole('Role 2',"SP Role 2", "Delete" ),
+                createDataRole('Role 3',"SP Role 3", "Delete" ),
             ]
 
         }
@@ -77,17 +84,18 @@ class RolePermissionConfiguration extends Component {
 
     render() {
         const { dataPermission, dataRole } = this.state;
+        const classes= this.props.classes;
 
         return (
-            <div className={this.props.classes.container}>
-                <div className={this.props.classes.tableWrapper}>
+            <div className={classes.container}>
+                <div className={classes.tableWrapper}>
                 <Button variant="raised" onClick={this.handleAddClaimURI}>
                     Add Permission
                 </Button>
-                    <Table className={this.props.classes.table}>
+                    <Table className={classes.table}>
                         <TableHead>
                             <TableRow>
-                                <TableCell>Name</TableCell>
+                                <TableCell>Permission</TableCell>
                                 <TableCell numeric>Action</TableCell>
                             </TableRow>
                         </TableHead>
@@ -95,22 +103,29 @@ class RolePermissionConfiguration extends Component {
                             {dataPermission.map(n => {
                                 return (
                                     <TableRow key={n.id}>
-                                        <TableCell>{n.name}</TableCell>
-                                        <TableCell numeric>{n.action}</TableCell>
+                                        <TableCell>{n.permission}</TableCell>
+                                        <TableCell numeric>
+                                            <Tooltip id="tooltip-top" title="Delete" placement="top">
+                                                <IconButton aria-label="Delete" onClick={this.handleDialogOpen}>
+                                                    <DeleteIcon className={classes.iconDelete}/>
+                                                </IconButton>
+                                            </Tooltip>
+                                        </TableCell>
                                     </TableRow>
                                 );
                             })}
                         </TableBody>
                     </Table>
                 </div>
-                <div className={this.props.classes.tableWrapper}>
+                <div className={classes.tableWrapper}>
                 <Button variant="raised" onClick={this.handleAddClaimURI}>
                     Add Role Mapping
                 </Button>
-                    <Table className={this.props.classes.table}>
+                    <Table className={classes.table}>
                         <TableHead>
                             <TableRow>
-                                <TableCell>Name</TableCell>
+                                <TableCell>Local Role</TableCell>
+                                <TableCell>Service Provider Role</TableCell>
                                 <TableCell numeric>Action</TableCell>
                             </TableRow>
                         </TableHead>
@@ -118,8 +133,15 @@ class RolePermissionConfiguration extends Component {
                             {dataRole.map(n => {
                                 return (
                                     <TableRow key={n.id}>
-                                        <TableCell>{n.name}</TableCell>
-                                        <TableCell numeric>{n.calories}</TableCell>
+                                        <TableCell>{n.role}</TableCell>
+                                        <TableCell>{n.spRole}</TableCell>
+                                        <TableCell numeric>
+                                            <Tooltip id="tooltip-top" title="Delete" placement="top">
+                                                <IconButton aria-label="Delete" onClick={this.handleDialogOpen}>
+                                                    <DeleteIcon className={classes.iconDelete}/>
+                                                </IconButton>
+                                            </Tooltip>
+                                        </TableCell>
                                     </TableRow>
                                 );
                             })}
