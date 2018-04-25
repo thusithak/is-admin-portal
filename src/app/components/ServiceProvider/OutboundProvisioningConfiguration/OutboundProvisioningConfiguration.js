@@ -20,14 +20,13 @@ import React, {Component} from "react";
 
 import {withStyles} from "material-ui/styles";
 import Typography from "material-ui/Typography";
-
+import yellow from 'material-ui/colors/yellow';
+import WarningIcon from 'material-ui-icons/Warning';
 
 const styles = theme => ({
 
     container: {
-        display: 'flex',
-        flexWrap: 'wrap',
-        marginTop: theme.spacing.unit * 3,
+        width:"100%",
     },
     textField: {
         marginLeft: theme.spacing.unit,
@@ -42,7 +41,25 @@ const styles = theme => ({
         width: "100%",
     },
     iconDelete: {},
-
+    alertWarning:{
+        display:"flex",
+        alignItems: "center",
+        padding: theme.spacing.unit * 2,
+        marginBottom: theme.spacing.unit * 3,
+        textShadow: "0 1px 0 rgba(255, 255, 255, 0.5)",
+        backgroundColor: yellow[100],
+        border: `1px solid ${yellow[600]}`,
+        width: "100%",
+        "& svg":{
+            marginRight:theme.spacing.unit,
+        },
+        "& p":{
+            margin:0,
+        }
+    },
+    warningIcon:{
+        color: yellow[800],
+    },
 });
 
 
@@ -59,15 +76,16 @@ class OutboundProvisioningConfiguration extends Component {
     }
 
     render() {
-
+        const {classes} = this.props;
         return (
-            <div className={this.props.classes.container}>
-                <div className={this.props.classes.tableWrapper}>
-                    <Typography variant="subheading" gutterBottom>Outbound Provisioning Configuration</Typography>
+            <div className={classes.container}>
+                    <div className={classes.alertWarning}>
+                        <WarningIcon className={classes.warningIcon}/>
                     <Typography gutterBottom>
+
                         There are no provisioning enabled identity providers defined in the system.
                     </Typography>
-                </div>
+                    </div>
             </div>
         )
     }
