@@ -23,6 +23,7 @@ import Radio, {RadioGroup} from "material-ui/Radio";
 import Collapse from "material-ui/transitions/Collapse";
 import Switch from 'material-ui/Switch';
 import {FormGroup, FormControlLabel} from 'material-ui/Form';
+import Grid from "material-ui/Grid";
 import LocalAuthenticationSelect from "../LocalOutboundAuthenticationConfiguration/LocalAuthenticationSelect";
 import AdvanceConfigurationSelect from "../LocalOutboundAuthenticationConfiguration/AdvanceConfigurationSelect";
 import RequestPathAuthenticationConfiguration from "../LocalOutboundAuthenticationConfiguration/RequestPathAuthenticationConfiguration";
@@ -125,7 +126,11 @@ class LocalOutboundAuthenticationConfiguration extends Component {
                                       label="Local Authentication"/>
                 </RadioGroup>
                 <Collapse in={this.state.showLocalAuthenticationSelect}>
-                    <LocalAuthenticationSelect/>
+                    <Grid container spacing={24} alignItems="flex-start" direction="row" justify="flex-start">
+                        <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+                            <LocalAuthenticationSelect/>
+                        </Grid>
+                    </Grid>
                 </Collapse>
                 <RadioGroup
                     aria-label="Authentication Type"
@@ -148,7 +153,7 @@ class LocalOutboundAuthenticationConfiguration extends Component {
                                       label="Advanced Configuration"/>
                 </RadioGroup>
                 <Collapse in={this.state.showAdvanceConfigurationSelect}>
-                    <AdvanceConfigurationSelect/>
+                        <AdvanceConfigurationSelect/>
                 </Collapse>
 
                 <FormGroup row className={classes.checkboxGroup}>

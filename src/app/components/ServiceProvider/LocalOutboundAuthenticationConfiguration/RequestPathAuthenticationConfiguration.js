@@ -20,13 +20,14 @@ import React, {Component} from "react";
 
 import {withStyles} from "material-ui/styles";
 import Button from "material-ui/Button";
-import List, { ListItem, ListItemText } from 'material-ui/List';
-import Menu, { MenuItem } from 'material-ui/Menu';
+import { MenuItem } from 'material-ui/Menu';
 import Table, {TableBody, TableCell, TableRow} from "material-ui/Table";
 import DeleteIcon from "material-ui-icons/Delete";
 import Tooltip from "material-ui/Tooltip";
 import IconButton from "material-ui/IconButton";
 import Typography from "material-ui/Typography";
+import Select from 'material-ui/Select';
+import { FormControl } from 'material-ui/Form';
 
 
 const styles = theme => ({
@@ -49,12 +50,17 @@ const styles = theme => ({
         width: "100%",
     },
     iconDelete: {},
+    formControl: {
+        margin: theme.spacing.unit,
+        minWidth: 120,
+        maxWidth: 300,
+    },
 
 });
 
 const options = [
-    'basic-auth',
-    'oauth-bearer',
+    {value: '1', label: 'basic-auth',},
+    {value: '2', label: 'oauth-bearer',},
 ];
 
 
@@ -75,22 +81,14 @@ class RequestPathAuthenticationConfiguration extends Component {
                 createData('BasicAuthRequestPathAuthenticator', "Delete"),
                 createData('OAuthRequestPathAuthenticator', "Delete" ),
             ],
-            anchorEl: null,
             selectedIndex: 1,
+            localAuthenticator: "basic-auth",
 
         }
     }
 
-    handleClickListItem = event => {
-        this.setState({ anchorEl: event.currentTarget });
-    };
-
-    handleMenuItemClick = (event, index) => {
-        this.setState({ selectedIndex: index, anchorEl: null });
-    };
-
-    handleClose = () => {
-        this.setState({ anchorEl: null });
+    handleLocalAuthenticatorListChange = localAuthenticator => event => {
+        this.setState({ [localAuthenticator]: event.target.value });
     };
 
     componentDidMount() {
@@ -98,44 +96,33 @@ class RequestPathAuthenticationConfiguration extends Component {
     }
 
     render() {
-        const { dataRequestPathAuthentication, anchorEl } = this.state;
+        const { dataRequestPathAuthentication } = this.state;
 
         return (
             <div className={this.props.classes.container}>
                 <div className={this.props.classes.tableWrapper}>
                     <Typography gutterBottom>Request Path Authentication Configuration</Typography>
+                    <FormControl className={this.props.classes.formControl}>
+                        <Select
+                            value={this.state.localAuthenticator}
+                            onChange={this.handleLocalAuthenticatorListChange('localAuthenticator')}
+                            inputProps={{
+                                name: 'localAuthenticator',
+                                id: 'localAuthenticator',
+                            }}
+                            displayEmpty
+                            label="asdasd"
+                        >
+                            {options.map(option => (
+                                <MenuItem key={option.value} value={option.value}>
+                                    {option.label}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
                     <Button variant="raised" onClick={this.handleAddClaimURI}>
                         Add
                     </Button>
-                        <List component="nav">
-                            <ListItem
-                                button
-                                aria-haspopup="true"
-                                aria-controls="lock-menu"
-                                aria-label="When device is locked"
-                                onClick={this.handleClickListItem}
-                            >
-                                <ListItemText
-                                    primary={options[this.state.selectedIndex]}
-                                />
-                            </ListItem>
-                        </List>
-                        <Menu
-                            id="lock-menu"
-                            anchorEl={anchorEl}
-                            open={Boolean(anchorEl)}
-                            onClose={this.handleClose}
-                        >
-                            {options.map((option, index) => (
-                                <MenuItem
-                                    key={option}
-                                    selected={index === this.state.selectedIndex}
-                                    onClick={event => this.handleMenuItemClick(event, index)}
-                                >
-                                    {option}
-                                </MenuItem>
-                            ))}
-                        </Menu>
                     <Table className={this.props.classes.table}>
                         <TableBody>
                             {dataRequestPathAuthentication.map(n => {

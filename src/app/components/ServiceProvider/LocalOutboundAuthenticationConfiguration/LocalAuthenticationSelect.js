@@ -50,8 +50,8 @@ class LocalAuthenticationSelect extends Component {
         }
     }
 
-    handleLocalAuthenticatorListChange = event => {
-        this.setState({ localAuthenticator: event.target.value });
+    handleLocalAuthenticatorListChange = localAuthenticator => event => {
+        this.setState({ [localAuthenticator]: event.target.value });
     };
 
     componentDidMount() {
@@ -65,11 +65,12 @@ class LocalAuthenticationSelect extends Component {
                 <FormControl className={this.props.classes.formControl}>
                 <Select
                     value={this.state.localAuthenticator}
-                    onChange={this.handleLocalAuthenticatorListChange}
+                    onChange={this.handleLocalAuthenticatorListChange('localAuthenticator')}
                     inputProps={{
                         name: 'localAuthenticator',
                         id: 'localAuthenticator',
                     }}
+                    displayEmpty
                 >
                     {localAuthenticatorList.map(option => (
                         <MenuItem key={option.value} value={option.value}>
