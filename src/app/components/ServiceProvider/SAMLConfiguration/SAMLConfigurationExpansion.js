@@ -2,6 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import {withStyles} from "material-ui/styles";
 import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
+import CheckIcon from 'material-ui-icons/Check';
+import DotIcon from 'material-ui-icons/PanoramaFishEye';
 import ExpansionPanel, {
     ExpansionPanelSummary,
     ExpansionPanelDetails,
@@ -9,6 +11,8 @@ import ExpansionPanel, {
 import Button from "material-ui/Button";
 import Typography from "material-ui/Typography";
 import Paper from "material-ui/Paper";
+import Badge from 'material-ui/Badge';
+
 import BasicInformation from "../BasicInformation/BasicInformation";
 import SamlConfigProfiles from "./SamlConfigProfiles";
 import ClaimConfiguration from "../ClaimConfiguration/ClaimConfiguration";
@@ -42,6 +46,34 @@ const styles = theme => ({
         marginTop: theme.spacing.unit,
         marginBottom: theme.spacing.unit,
     },
+    column: {
+        flexBasis: '50%',
+    },
+    columnSecondaryHeading: {
+        flexBasis: '50%',
+        textAlign: "right",
+    },
+    secondaryHeading: {
+        display: "inline-block",
+        fontSize: theme.typography.pxToRem(12),
+        color: theme.palette.text.secondary,
+        padding: `${theme.spacing.unit / 2 - 1}px ${theme.spacing.unit}px`,
+        marginLeft: theme.spacing.unit / 2,
+    },
+    badgeStyle: {
+        "& span + span": {
+            top: "-10px",
+            right: "-6px",
+        }
+    },
+    badgeStyleCheck: {
+        fontSize: theme.typography.pxToRem(20),
+        color: theme.palette.primary.main,
+    },
+    badgeStyleDot: {
+        fontSize: theme.typography.pxToRem(15),
+        color: theme.palette.primary.main,
+    },
 });
 
 function getSteps() {
@@ -57,25 +89,26 @@ function getSteps() {
 }
 
 class SAMLConfigurationExpansion extends React.Component {
-    state = {
-        activeStep: 1,
-        completed: {},
-    };
-
-    completedSteps() {
-        return Object.keys(this.state.completed).length;
-    }
-
-    totalSteps = () => {
-        return getSteps().length;
-    };
-
-    isLastStep() {
-        return this.state.activeStep === this.totalSteps() - 1;
-    }
-
-    allStepsCompleted() {
-        return this.completedSteps() === this.totalSteps();
+    constructor(props) {
+        super(props);
+        this.state = {
+            activeStep: 1,
+            sAMLPanelCollapsed: false,
+            changedSAMLPanelList: [
+                {key: '1', label: 'Section 1', allFilled: true,},
+                {key: '2', label: 'Section 2', allFilled: false,},
+                {key: '3', label: 'Section 3', allFilled: false,},
+                {key: '4', label: 'Section 4', allFilled: true,},
+                {key: '5', label: 'Section 5', allFilled: false,},
+            ],
+            changedPanelsList: [
+                {key: '1', label: 'Section 1', allFilled: true,},
+                {key: '2', label: 'Section 2', allFilled: false,},
+                {key: '3', label: 'Section 3', allFilled: false,},
+                {key: '4', label: 'Section 4', allFilled: true,},
+                {key: '5', label: 'Section 5', allFilled: false,},
+            ],
+        }
     }
 
     handleNext = () => {
@@ -94,33 +127,25 @@ class SAMLConfigurationExpansion extends React.Component {
         });
     };
 
-    handleBack = () => {
-        const {activeStep} = this.state;
-        this.setState({
-            activeStep: activeStep - 1,
-        });
-    };
-
-    handleStep = step => () => {
-        this.setState({
-            activeStep: step,
-        });
-    };
-
     handleSave = () => {
 
     };
 
     handleReset = () => {
+
+    };
+
+    handleSAMLPanelChange = (event, expanded) => {
         this.setState({
-            activeStep: 0,
-            completed: {},
+            sAMLPanelCollapsed : !expanded,
         });
+        console.log(expanded);
     };
 
     render() {
         const {classes} = this.props;
         const steps = getSteps();
+        const {changedSAMLPanelList, sAMLPanelCollapsed} = this.state;
 
         return (
             <div className={classes.root}>
@@ -132,15 +157,29 @@ class SAMLConfigurationExpansion extends React.Component {
                         <BasicInformation/>
                     </ExpansionPanelDetails>
                 </ExpansionPanel>
-                <ExpansionPanel defaultExpanded>
+                <ExpansionPanel defaultExpanded onChange={this.handleSAMLPanelChange}>
                     <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                        <Typography className={classes.heading} variant="body2">{steps[1]}</Typography>
+                        <div className={classes.column}>
+                            <Typography className={classes.heading} variant="body2">{steps[1]}</Typography>
+                        </div>
+                        {sAMLPanelCollapsed ? (
+                        <div className={classes.columnSecondaryHeading}>
+                            {changedSAMLPanelList.map(n => (
+                                <Badge className={classes.badgeStyle}
+                                       badgeContent={n.allFilled ? <CheckIcon className={classes.badgeStyleCheck}/> :
+                                           <DotIcon className={classes.badgeStyleDot}/>}
+                                       key={n.key}>
+                                    <Typography className={classes.secondaryHeading}
+                                                component="span">{n.label}</Typography>
+                                </Badge>
+                            ))}
+                        </div>
+                        ) : null}
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails>
                         <SamlConfigProfiles/>
                     </ExpansionPanelDetails>
                 </ExpansionPanel>
-
                 <ExpansionPanel>
                     <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                         <Typography className={classes.heading} variant="body2">{steps[2]}</Typography>
@@ -149,7 +188,6 @@ class SAMLConfigurationExpansion extends React.Component {
                         <ClaimConfiguration/>
                     </ExpansionPanelDetails>
                 </ExpansionPanel>
-
                 <ExpansionPanel>
                     <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                         <Typography className={classes.heading} variant="body2">{steps[3]}</Typography>
@@ -158,7 +196,6 @@ class SAMLConfigurationExpansion extends React.Component {
                         <RolePermissionConfiguration/>
                     </ExpansionPanelDetails>
                 </ExpansionPanel>
-
                 <ExpansionPanel>
                     <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                         <Typography className={classes.heading} variant="body2">{steps[4]}</Typography>
@@ -167,7 +204,6 @@ class SAMLConfigurationExpansion extends React.Component {
                         <LocalOutboundAuthenticationConfiguration/>
                     </ExpansionPanelDetails>
                 </ExpansionPanel>
-
                 <ExpansionPanel>
                     <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                         <Typography className={classes.heading} variant="body2">{steps[5]}</Typography>
@@ -176,7 +212,6 @@ class SAMLConfigurationExpansion extends React.Component {
                         <InboundProvisioningConfiguration/>
                     </ExpansionPanelDetails>
                 </ExpansionPanel>
-
                 <ExpansionPanel>
                     <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                         <Typography className={classes.heading} variant="body2">{steps[6]}</Typography>
