@@ -46,7 +46,6 @@ const styles = theme => ({
         alignItems: "center",
         padding: theme.spacing.unit * 2,
         marginBottom: theme.spacing.unit * 3,
-        textShadow: "0 1px 0 rgba(255, 255, 255, 0.5)",
         backgroundColor: yellow[100],
         border: `1px solid ${yellow[600]}`,
         width: "100%",

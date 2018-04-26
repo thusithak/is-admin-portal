@@ -87,7 +87,7 @@ class SAMLConfiguration extends Component {
     render(){
         const { loading } = this.state;
         const {classes} = this.props;
-        console.log(this.props);
+
         if(loading) { // if your component doesn't have to wait for an async action, remove this block
             return (
                 <PageLoadingAnimation/>
