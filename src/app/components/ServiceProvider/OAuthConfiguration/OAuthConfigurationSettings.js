@@ -23,6 +23,7 @@ import {withStyles} from "material-ui/styles";
 import TextField from "material-ui/TextField";
 import {FormControl, FormControlLabel, FormGroup, FormHelperText} from "material-ui/Form";
 import Input, {InputLabel, InputAdornment} from 'material-ui/Input';
+import {MenuItem} from 'material-ui/Menu';
 import IconButton from 'material-ui/IconButton';
 import Visibility from 'material-ui-icons/Visibility';
 import VisibilityOff from 'material-ui-icons/VisibilityOff';
@@ -36,6 +37,9 @@ import Divider from "material-ui/Divider";
 import Typography from "material-ui/Typography";
 import ExpansionPanel, {ExpansionPanelDetails, ExpansionPanelSummary} from "material-ui/ExpansionPanel";
 import ExpandMoreIcon from "material-ui-icons/ExpandMore";
+import DeleteIcon from "material-ui-icons/Delete";
+import Tooltip from "material-ui/Tooltip";
+import Table, {TableBody, TableCell, TableRow, TableHead} from "material-ui/Table";
 import classNames from 'classnames';
 
 const styles = theme => ({
@@ -131,8 +135,40 @@ const styles = theme => ({
     },
     marginBottom:{
         marginBottom: theme.spacing.unit,
-    }
+    },
+
+    indentInnderContent: {
+        marginLeft: theme.spacing.unit * 5,
+        padding: theme.spacing.unit,
+        paddingTop: 0,
+    },
+    table: {
+        width: "100%",
+    },
+    tableWrapper: {
+        marginTop: theme.spacing.unit * 3,
+        width: "100%",
+    },
 });
+
+let id = 0;
+function createData(audience, action) {
+    id += 1;
+    return { id, audience, action};
+}
+
+const encryptionAlgorithmList = [
+    {value: '1', label: 'RSA1_5',},
+    {value: '2', label: 'RSA-OAEP',},
+];
+
+const encryptionMethodList = [
+    {value: '1', label: 'A128GCM',},
+    {value: '2', label: 'A192GCM',},
+    {value: '3', label: 'A256GCM',},
+    {value: '4', label: 'A128CBC-HS256',},
+    {value: '5', label: 'A128CBC+HS256',},
+];
 
 class OAuthConfigurationSettings extends Component {
     constructor(props) {
@@ -176,10 +212,15 @@ class OAuthConfigurationSettings extends Component {
             enableSignatureValidation: false,
             enableAssertionEncryption: false,
             enableSingleLogout: false,
+            encryptionAlgorithm:"RSA-OAEP",
+            encryptionMethod:"A128GCM",
             sLOResponseURL: "",
             sLORequestURL: "",
             enableAttributeProfile: false,
             enableAudienceRestriction: false,
+            enableIDTokenEncryption: false,
+            roleBasedScopeValidator: false,
+            xACMLScopeValidator: false,
             enableRecipientValidation: false,
             enableIdPInitiatedSSO: false,
             enableIdPInitiatedSLO: false,
@@ -187,6 +228,10 @@ class OAuthConfigurationSettings extends Component {
             sPInitializedWebSSO: false,
             ecp: false,
             iDPDiscovery: false,
+            dataAudience : [
+                createData('Audience 1', "Delete"),
+                createData('Audience 2', "Delete" ),
+            ],
         }
     }
 
@@ -308,6 +353,30 @@ class OAuthConfigurationSettings extends Component {
         this.setState({enableAudienceRestriction: event.target.checked});
     };
 
+    handleEnableIDTokenEncryptionChange = event => {
+        this.setState({enableIDTokenEncryption: event.target.checked});
+    };
+
+    handleRoleBasedScopeValidatorChange = event => {
+        this.setState({roleBasedScopeValidator: event.target.checked});
+    };
+
+    handleXACMLScopeValidatorChange = event => {
+        this.setState({xACMLScopeValidator: event.target.checked});
+    };
+
+    handleEncryptionAlgorithmChange = event => {
+        this.setState({
+            encryptionAlgorithm: event.target.value
+        });
+    };
+
+    handleEncryptionMethodChange = event => {
+        this.setState({
+            encryptionMethod: event.target.value
+        });
+    };
+
     handleEnableRecipientValidationChange = event => {
         this.setState({enableRecipientValidation: event.target.checked});
     };
@@ -353,6 +422,7 @@ class OAuthConfigurationSettings extends Component {
 
     render() {
         const {classes} = this.props;
+        const { dataAudience } = this.state;
 
         return (
             <div className={classes.expansionPanel}>
@@ -645,6 +715,8 @@ class OAuthConfigurationSettings extends Component {
                                             label="Enable Audience Restriction"
                                             className={classes.fullWidthSwitch}
                                         />
+                                        <Grid container spacing={24} alignItems="flex-start" direction="row" justify="flex-start">
+                                            <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
                                         <Collapse in={this.state.enableAudienceRestriction}>
                                             <TextField
                                                 required
@@ -658,7 +730,33 @@ class OAuthConfigurationSettings extends Component {
                                             <Button variant="raised" className={classes.button}>
                                                 Add
                                             </Button>
+                                                <Table className={classes.table}>
+                                                    <TableHead>
+                                                        <TableRow>
+                                                            <TableCell>Audience</TableCell>
+                                                            <TableCell numeric>Action</TableCell>
+                                                        </TableRow>
+                                                    </TableHead>
+                                                    <TableBody>
+                                                        {dataAudience.map(n => {
+                                                            return (
+                                                                <TableRow key={n.id}>
+                                                                    <TableCell>{n.audience}</TableCell>
+                                                                    <TableCell numeric>
+                                                                        <Tooltip id="tooltip-top" title="Delete" placement="top">
+                                                                            <IconButton aria-label="Delete" onClick={this.handleDialogOpen}>
+                                                                                <DeleteIcon className={classes.iconDelete}/>
+                                                                            </IconButton>
+                                                                        </Tooltip>
+                                                                    </TableCell>
+                                                                </TableRow>
+                                                            );
+                                                        })}
+                                                    </TableBody>
+                                                </Table>
                                         </Collapse>
+                                            </Grid>
+                                        </Grid>
                                     </FormGroup>
                                     <FormGroup row>
                                         <FormControlLabel
@@ -678,57 +776,79 @@ class OAuthConfigurationSettings extends Component {
                                         <FormControlLabel
                                             control={
                                                 <Switch
-                                                    checked={this.state.enableAudienceRestriction}
-                                                    onChange={this.handleEnableAudienceRestrictionChange}
-                                                    value="enableAudienceRestriction"
+                                                    checked={this.state.enableIDTokenEncryption}
+                                                    onChange={this.handleEnableIDTokenEncryptionChange}
+                                                    value="enableIDTokenEncryption"
                                                     color="primary"
                                                 />
                                             }
                                             label="Enable ID Token Encryption"
                                             className={classes.fullWidthSwitch}
                                         />
-                                        <Collapse in={this.state.enableAudienceRestriction}>
-                                            <TextField
-                                                required
-                                                id="encryptionAlgorithm"
-                                                label="Encryption Algorithm"
-                                                className={classes.textField}
-                                                onChange={this.handleAudienceChange}
-                                                margin="normal"
-                                            />
-                                            <TextField
-                                                required
-                                                id="encryptionMethod"
-                                                label="Encryption Method"
-                                                className={classes.textField}
-                                                onChange={this.handleAudienceChange}
-                                                margin="normal"
-                                            />
+                                        <Grid container spacing={24} alignItems="flex-start" direction="row" justify="flex-start">
+                                            <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+                                        <Collapse in={this.state.enableIDTokenEncryption}>
+                                            <div className={classes.indentInnderContent}>
+                                                    <TextField
+                                                        select
+                                                        required
+                                                        id="encriptionAlgorithm"
+                                                        label="Encryption Algorithm"
+                                                        className={this.props.classes.textField}
+                                                        value={this.state.encryptionAlgorithm}
+                                                        onChange={this.handleEncryptionAlgorithmChange}
+                                                        margin="normal"
+                                                    >
+                                                        {encryptionAlgorithmList.map(option => (
+                                                            <MenuItem key={option.value} value={option.value}>
+                                                                {option.label}
+                                                            </MenuItem>
+                                                        ))}
+                                                    </TextField>
+                                                    <TextField
+                                                        select
+                                                        required
+                                                        id="scimInboundUserstore"
+                                                        label="Encryption Method"
+                                                        className={this.props.classes.textField}
+                                                        value={this.state.encryptionMethod}
+                                                        onChange={this.handleEncryptionMethodChange}
+                                                        margin="normal"
+                                                    >
+                                                        {encryptionMethodList.map(option => (
+                                                            <MenuItem key={option.value} value={option.value}>
+                                                                {option.label}
+                                                            </MenuItem>
+                                                        ))}
+                                                    </TextField>
+                                            </div>
                                         </Collapse>
+                                            </Grid>
+                                        </Grid>
                                     </FormGroup>
                                     <FormGroup row>
                                         <FormControlLabel
                                             control={
                                                 <Switch
-                                                    checked={this.state.enableAudienceRestriction}
-                                                    onChange={this.handleEnableAudienceRestrictionChange}
-                                                    value="enableAudienceRestriction"
+                                                    checked={this.state.roleBasedScopeValidator}
+                                                    onChange={this.handleRoleBasedScopeValidatorChange}
+                                                    value="roleBasedScopeValidator"
                                                     color="primary"
                                                 />
                                             }
-                                            label="Role based scope validator"
+                                            label="Role Based Scope Validator"
                                             className={classes.fullWidthSwitch}
                                         />
                                         <FormControlLabel
                                             control={
                                                 <Switch
-                                                    checked={this.state.enableAudienceRestriction}
-                                                    onChange={this.handleEnableAudienceRestrictionChange}
-                                                    value="enableAudienceRestriction"
+                                                    checked={this.state.xACMLScopeValidator}
+                                                    onChange={this.handleXACMLScopeValidatorChange}
+                                                    value="xACMLScopeValidator"
                                                     color="primary"
                                                 />
                                             }
-                                            label="XACML scope validator"
+                                            label="XACML Scope Validator"
                                             className={classes.fullWidthSwitch}
                                         />
                                     </FormGroup>
@@ -744,8 +864,8 @@ class OAuthConfigurationSettings extends Component {
                         </div>
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails>
-                        <Grid container spacing={40} alignItems="flex-start" direction="row" justify="center">
-                            <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
+                        <Grid container spacing={40} alignItems="flex-start" direction="row" justify="flex-start">
+                            <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
                                 <TextField
                                     id="userAccessTokenExpiryTime"
                                     label="User Access Token Expiry Time"
@@ -758,7 +878,7 @@ class OAuthConfigurationSettings extends Component {
                                     }}
                                 />
                             </Grid>
-                            <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
+                            <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
                                 <TextField
                                     id="applicationAccessTokenExpiryTime"
                                     label="Application Access Token Expiry Time"
@@ -772,7 +892,7 @@ class OAuthConfigurationSettings extends Component {
                                 >
                                 </TextField>
                             </Grid>
-                            <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
+                            <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
                                 <TextField
                                     id="refreshTokenExpiryTime"
                                     label="Refresh Token Expiry Time"
