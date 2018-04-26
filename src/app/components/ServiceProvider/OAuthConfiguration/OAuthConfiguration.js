@@ -27,6 +27,7 @@ import Typography from "material-ui/Typography";
 import Dialog, {DialogActions, DialogContent, DialogContentText, DialogTitle} from "material-ui/Dialog";
 import PageLoadingAnimation from "../../Base/Loading/loading";
 import OAuthConfigurationWizard from "./OAuthConfigurationWizard";
+import OAuthConfigurationExpansion from "./OAuthConfigurationExpansion";
 import classNames from "classnames";
 
 const styles = theme => ({
@@ -121,7 +122,8 @@ class OAuthConfiguration extends Component {
                 </Grid>
                 <Grid container spacing={0} alignItems="flex-start" direction="row" justify="center">
                     <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-                        <OAuthConfigurationWizard/>
+                        {/*<OAuthConfigurationWizard/>*/}
+                        <OAuthConfigurationExpansion/>
                     </Grid>
                 </Grid>
 
