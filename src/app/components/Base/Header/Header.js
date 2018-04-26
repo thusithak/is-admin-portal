@@ -105,6 +105,9 @@ const styles = theme => ({
         "& :children":{
             height:50
         }
+    },
+    menuList:{
+        padding:0,
     }
 });
 
@@ -224,7 +227,7 @@ class Header extends Component {
                         </IconButton>
                     </div>
                     <Divider />
-                    <List>
+                    <List className={classes.menuList}>
                         <ListItem button component={Link} to="/Onboarding">
                             <ListItemIcon>
                                 <HomeIcon />

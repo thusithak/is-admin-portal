@@ -23,10 +23,9 @@ import gray from 'material-ui/colors/grey';
 
 const styles = theme => ({
     root: {
-        padding: theme.spacing.unit,
+        padding: theme.spacing.unit * 2 - 1,
         paddingLeft: theme.spacing.unit * 3,
         background: gray[200],
-        borderBottom: `1px solid ${gray[300]}`,
     },
     asdaD:{
         color:theme.palette.primary.contrastText,
