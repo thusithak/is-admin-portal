@@ -97,6 +97,7 @@ const styles = theme => ({
     },
     fullWidthSwitch: {
         width: "100%",
+        marginLeft: "-5px",
     },
     paper: {
         padding: theme.spacing.unit * 3,

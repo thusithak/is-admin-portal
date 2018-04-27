@@ -80,6 +80,7 @@ const styles = theme => ({
     },
     fullWidthSwitch: {
         width: "100%",
+        marginLeft: "-5px",
     },
     paper: {
         padding: theme.spacing.unit * 3,
@@ -565,6 +566,7 @@ class SamlConfigProfiles extends Component {
                                                 />
                                             }
                                             label="Enable Response Signing"
+                                            className={classes.fullWidthSwitch}
                                         />
                                         <FormControlLabel
                                             control={
@@ -588,6 +590,7 @@ class SamlConfigProfiles extends Component {
                                                 />
                                             }
                                             label="Enable Assertion Encryption"
+                                            className={classes.fullWidthSwitch}
                                         />
                                     </FormGroup>
                                     <FormGroup row>
@@ -615,6 +618,7 @@ class SamlConfigProfiles extends Component {
                                                         />
                                                     }
                                                     label="Include Attributes in the Response Always"
+                                                    className={classes.fullWidthSwitch}
                                                 />
                                             </div>
                                         </Collapse>

@@ -33,8 +33,9 @@ const styles = theme => ({
     checkboxGroup: {
         marginTop: theme.spacing.unit * 3,
     },
-    fullWidthSwitch:{
-        width:"100%",
+    fullWidthSwitch: {
+        width: "100%",
+        marginLeft: "-5px",
     },
     contentSpaceTop:{
         marginTop: theme.spacing.unit * 3,

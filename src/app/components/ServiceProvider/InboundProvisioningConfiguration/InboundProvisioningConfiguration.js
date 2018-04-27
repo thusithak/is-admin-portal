@@ -46,7 +46,10 @@ const styles = theme => ({
         width: "100%",
     },
     iconDelete: {},
-
+    fullWidthSwitch: {
+        width: "100%",
+        marginLeft: "-5px",
+    },
 });
 
 const scimInboundUserstoreList = [

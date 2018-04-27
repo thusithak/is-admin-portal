@@ -37,6 +37,10 @@ const styles = theme => ({
     contentSpaceTop:{
         marginTop: theme.spacing.unit * 3,
     },
+    fullWidthSwitch:{
+        width: "100%",
+        marginLeft: "-5px",
+    },
 });
 
 class BasicInformation extends Component {
