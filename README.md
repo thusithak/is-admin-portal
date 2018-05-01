@@ -24,10 +24,10 @@ You should be able to run the following command after the installation procedure
 below.
 
     $ node --version
-    v0.10.24
+    v8.0.0
 
     $ npm --version
-    1.3.21
+    5.0.0
 
 #### Node installation on OS X
 
