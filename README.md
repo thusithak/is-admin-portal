@@ -60,7 +60,7 @@ Also, be sure to have `git` available in your PATH, `npm` might need it.
 &nbsp;
 ## Installing the app
 
-    $ git clone [is-admin-portal](https://github.com/thusithak/is-admin-portal)
+    $ git clone [is-admin-portal] (https://github.com/thusithak/is-admin-portal)
     $ cd is-admin-portal
     $ git checkout non-webpack-based
     $ npm install
