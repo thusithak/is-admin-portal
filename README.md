@@ -12,7 +12,7 @@
 - [Running the App](#running-the-app)
 - [Folder Structure](#folder-structure)
 
-
+&nbsp;
 
 ## Requirements
 
