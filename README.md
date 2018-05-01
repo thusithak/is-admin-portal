@@ -2,6 +2,8 @@
 
 # Identity Server - Admin Portal
 
+&nbsp;
+&nbsp;
 
 ## Table of Contents
 
@@ -55,7 +57,7 @@ Just go on [official Node.js website](http://nodejs.org/) & grab the installer.
 Also, be sure to have `git` available in your PATH, `npm` might need it.
 
 ---
-
+&nbsp;
 ## Installing the app
 
     $ git clone [is-admin-portal](https://github.com/thusithak/is-admin-portal)
@@ -63,6 +65,10 @@ Also, be sure to have `git` available in your PATH, `npm` might need it.
     $ git checkout non-webpack-based
     $ npm install
 
+
+
+
+&nbsp;
 
 ## Running the app
 
@@ -76,6 +82,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.<br>
 You will also see any lint errors in the console.
 
+&nbsp;
 
 ## Folder Structure
 
@@ -96,3 +103,5 @@ is-admin-portal/
     index.js
 ```
 
+&nbsp;
+&nbsp;
