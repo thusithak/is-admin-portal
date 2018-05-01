@@ -1,15 +1,16 @@
 
-## Table of Contents
-
-- [Folder Structure](#folder-structure)
-- [Requirements](#available-scripts)
-  - [Installing the Product](#npm-start)
-  - [Running the Product](#npm-test)
-  - [npm run build](#npm-run-build)
-  - [npm run eject](#npm-run-eject)
-
 
 # Identity Server - Admin Portal
+
+
+## Table of Contents
+
+- [Requirements](#requirements)
+- [Installing the App](#installing-the-app)
+- [Running the App](#running-the-app)
+- [Folder Structure](#folder-structure)
+
+
 
 ## Requirements
 
